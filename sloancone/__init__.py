@@ -1,2 +1,4 @@
 import utKit
 import cl_utils
+from sdss_square_search import sdss_square_search
+from cone_search_sdss import cone_search_sdss
