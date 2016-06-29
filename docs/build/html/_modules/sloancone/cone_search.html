@@ -1,0 +1,496 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sloancone.cone_search &mdash; sloancone 0.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/dryx.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="sloancone 0.2 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> sloancone
+          
+
+          
+            
+            <img src="../../_static/thespacedoctor_icon_white_circle.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#tutorial">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">sloancone</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>sloancone.cone_search</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sloancone.cone_search</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/local/bin/python</span>
+<span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">*Perform a conesearch of SDSS at a given location with a specified search radius*</span>
+
+<span class="sd">:Author:</span>
+<span class="sd">    David Young</span>
+
+<span class="sd">:Date Created:</span>
+<span class="sd">    June 29, 2016</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">################# GLOBAL IMPORTS ####################</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vt100&#39;</span>
+<span class="kn">from</span> <span class="nn">fundamentals</span> <span class="kn">import</span> <span class="n">tools</span><span class="p">,</span> <span class="n">times</span>
+<span class="kn">from</span> <span class="nn">fundamentals.files</span> <span class="kn">import</span> <span class="n">list_of_dictionaries_to_csv</span>
+
+
+<div class="viewcode-block" id="cone_search"><a class="viewcode-back" href="../../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search">[docs]</a><span class="k">class</span> <span class="nc">cone_search</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *The worker class for the cone_search module*</span>
+
+<span class="sd">    **Key Arguments:**</span>
+<span class="sd">        - ``log`` -- logger</span>
+<span class="sd">        - ``ra`` -- ra in sexigesimal or decimal degrees</span>
+<span class="sd">        - ``dec`` -- dec in sexigesimal or decimal degrees</span>
+<span class="sd">        - ``searchRadius`` -- search radius in arcsecs</span>
+<span class="sd">        - ``nearest`` -- show closest match only</span>
+<span class="sd">        - ``outputFormat`` -- output format (table or csv)</span>
+
+<span class="sd">    **Usage:**</span>
+<span class="sd">        .. todo::</span>
+
+<span class="sd">            - add usage info</span>
+<span class="sd">            - create a sublime snippet for usage</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone.cone_search import cone_search</span>
+<span class="sd">            csResults = cone_search(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=&quot;12:45:23.2323&quot;,</span>
+<span class="sd">                dec=&quot;30.343122&quot;,</span>
+<span class="sd">                searchRadius=60.,</span>
+<span class="sd">                nearest=False,</span>
+<span class="sd">                outputFormat=&quot;table&quot;,</span>
+<span class="sd">                galaxyType=&quot;all&quot;</span>
+<span class="sd">            ).get()</span>
+
+<span class="sd">            print csResults </span>
+
+<span class="sd">        This code outputs the following:</span>
+
+<span class="sd">        .. code-block:: plain</span>
+
+<span class="sd">            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">            | sdss_name                 | type    | ra        | dec      | specz  | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |</span>
+<span class="sd">            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">            | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None   | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |</span>
+<span class="sd">            | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None   | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |</span>
+<span class="sd">            | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None   | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |</span>
+<span class="sd">            | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None   | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |</span>
+<span class="sd">            | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None   | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |</span>
+<span class="sd">            | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None   | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |</span>
+<span class="sd">            | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None   | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |</span>
+<span class="sd">            | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None   | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |</span>
+<span class="sd">            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+
+<span class="sd">        To return results in a traditional CSV format:</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone.cone_search import cone_search</span>
+<span class="sd">            csResults = cone_search(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=&quot;112.233432&quot;,</span>
+<span class="sd">                dec=&quot;15:34:31.22&quot;,</span>
+<span class="sd">                searchRadius=60.,</span>
+<span class="sd">                nearest=True,</span>
+<span class="sd">                outputFormat=&quot;csv&quot;,</span>
+<span class="sd">                galaxyType=&quot;all&quot;</span>
+<span class="sd">            ).get()</span>
+
+<span class="sd">            print csResults</span>
+
+<span class="sd">        This code outputs the following:</span>
+
+<span class="sd">        .. code-block:: plain</span>
+
+<span class="sd">            sdss_name,type,ra,dec,specz,specz_err,photoz,photoz_err,separation_arcsec,separation_north_arcsec,separation_east_arcsec</span>
+<span class="sd">            SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273,-10.2034</span>
+
+<span class="sd">        To filter the result be a redshift type (``specz`` or ``photoz``)</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone.cone_search import cone_search</span>
+<span class="sd">            csResults = cone_search(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=&quot;12:45:23.2323&quot;,</span>
+<span class="sd">                dec=&quot;30.343122&quot;,</span>
+<span class="sd">                searchRadius=600.,</span>
+<span class="sd">                nearest=False,</span>
+<span class="sd">                outputFormat=&quot;table&quot;,</span>
+<span class="sd">                galaxyType=&quot;specz&quot;</span>
+<span class="sd">            ).get()</span>
+
+<span class="sd">            print csResults </span>
+
+<span class="sd">        This code outputs the following:</span>
+
+<span class="sd">        .. code-block:: plain</span>
+
+<span class="sd">           +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">           | sdss_name                 | type    | ra        | dec      | specz   | specz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |</span>
+<span class="sd">           +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">           | SDSS J124540.06+301923.0  | galaxy  | 191.4169  | 30.3231  | 0.3629  | 0.0002     | 229.5373           | -72.2170                 | 217.8809                |</span>
+<span class="sd">           | SDSS J124534.33+301624.6  | galaxy  | 191.3931  | 30.2735  | 0.2609  | 0.0000     | 288.8809           | -250.5509                | 143.7929                |</span>
+<span class="sd">           | SDSS J124512.46+301502.3  | galaxy  | 191.3019  | 30.2506  | 0.5810  | 0.0002     | 360.9520           | -332.9018                | -139.5091               |</span>
+<span class="sd">           | SDSS J124512.46+301502.3  | galaxy  | 191.3019  | 30.2506  | 0.5809  | 0.0002     | 360.9520           | -332.9018                | -139.5091               |</span>
+<span class="sd">           | SDSS J124544.87+302435.6  | galaxy  | 191.4370  | 30.4099  | 0.2254  | 0.0000     | 369.1276           | 240.3704                 | 280.1380                |</span>
+<span class="sd">           | SDSS J124547.42+302532.8  | galaxy  | 191.4476  | 30.4258  | 0.4473  | 0.0001     | 431.9371           | 297.5669                 | 313.0872                |</span>
+<span class="sd">           | SDSS J124454.28+301700.6  | galaxy  | 191.2262  | 30.2835  | 0.2599  | 0.0000     | 431.9447           | -214.5446                | -374.8959               |</span>
+<span class="sd">           | SDSS J124558.38+301904.7  | galaxy  | 191.4933  | 30.3180  | 0.1767  | 0.0000     | 463.9608           | -90.4407                 | 455.0606                |</span>
+<span class="sd">           | SDSS J124544.31+301417.7  | galaxy  | 191.4347  | 30.2383  | 0.3632  | 0.0000     | 465.9112           | -377.4610                | 273.1236                |</span>
+<span class="sd">           | SDSS J124543.24+301319.2  | galaxy  | 191.4302  | 30.2220  | 0.0669  | 0.0000     | 507.2387           | -436.0132                | 259.1979                |</span>
+<span class="sd">           | SDSS J124557.99+302437.8  | galaxy  | 191.4916  | 30.4105  | 0.4469  | 0.0002     | 511.0694           | 242.6379                 | 449.7987                |</span>
+<span class="sd">           | SDSS J124602.33+302241.3  | galaxy  | 191.5097  | 30.3782  | 0.4365  | 0.0001     | 521.5570           | 126.1410                 | 506.0733                |</span>
+<span class="sd">           | SDSS J124602.33+302241.3  | galaxy  | 191.5097  | 30.3782  | 0.4365  | 0.0001     | 521.5570           | 126.1410                 | 506.0733                |</span>
+<span class="sd">           | SDSS J124605.96+301913.6  | galaxy  | 191.5248  | 30.3205  | 0.1761  | 0.0000     | 559.2108           | -81.5693                 | 553.2298                |</span>
+<span class="sd">           | SDSS J124439.37+301949.6  | galaxy  | 191.1640  | 30.3305  | 0.2219  | 0.0000     | 569.6536           | -45.5571                 | -567.8291               |</span>
+<span class="sd">           | SDSS J124439.37+301949.6  | galaxy  | 191.1640  | 30.3305  | 0.2220  | 0.0000     | 569.6536           | -45.5571                 | -567.8291               |</span>
+<span class="sd">           | SDSS J124538.93+302945.0  | galaxy  | 191.4122  | 30.4958  | 0.2252  | 0.0000     | 586.1380           | 549.8198                 | 203.1158                |</span>
+<span class="sd">           | SDSS J124450.57+301333.8  | galaxy  | 191.2107  | 30.2261  | 0.4373  | 0.0001     | 597.1297           | -421.4088                | -423.0586               |</span>
+<span class="sd">           | SDSS J124450.57+301333.8  | galaxy  | 191.2107  | 30.2261  | 0.4377  | 0.0001     | 597.1297           | -421.4088                | -423.0586               |</span>
+<span class="sd">           +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+</span>
+
+<span class="sd">        Finally, we can also search for stars and galaxies by selecting ``galaxyType=False``:</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone.cone_search import cone_search</span>
+<span class="sd">            csResults = cone_search(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=&quot;12:45:23.2323&quot;,</span>
+<span class="sd">                dec=&quot;30.343122&quot;,</span>
+<span class="sd">                searchRadius=60.,</span>
+<span class="sd">                nearest=False,</span>
+<span class="sd">                outputFormat=&quot;table&quot;,</span>
+<span class="sd">                galaxyType=False</span>
+<span class="sd">            ).get()</span>
+
+<span class="sd">            print csResults</span>
+
+<span class="sd">        .. code-block:: plain</span>
+
+<span class="sd">            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">            | sdss_name                 | type    | ra        | dec      | specz    | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |</span>
+<span class="sd">            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">            | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None     | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |</span>
+<span class="sd">            | SDSS J124524.92+302042.7  | star    | 191.3539  | 30.3452  | None     | None       | None    | None        | 23.2234            | 7.5490                   | 21.9622                 |</span>
+<span class="sd">            | SDSS J124521.68+302016.9  | star    | 191.3403  | 30.3380  | -0.0001  | 0.0000     | None    | None        | 27.1558            | -18.2960                 | -20.0672                |</span>
+<span class="sd">            | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None     | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |</span>
+<span class="sd">            | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None     | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |</span>
+<span class="sd">            | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None     | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |</span>
+<span class="sd">            | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None     | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |</span>
+<span class="sd">            | SDSS J124521.67+301955.1  | star    | 191.3403  | 30.3320  | None     | None       | None    | None        | 44.8763            | -40.0699                 | -20.2060                |</span>
+<span class="sd">            | SDSS J124526.25+302103.7  | star    | 191.3594  | 30.3511  | None     | None       | None    | None        | 48.4191            | 28.5417                  | 39.1124                 |</span>
+<span class="sd">            | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None     | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |</span>
+<span class="sd">            | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None     | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |</span>
+<span class="sd">            | SDSS J124522.15+301937.9  | star    | 191.3423  | 30.3272  | None     | None       | None    | None        | 58.9703            | -57.2852                 | -13.9962                |</span>
+<span class="sd">            | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None     | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |</span>
+<span class="sd">            | SDSS J124526.04+301947.9  | star    | 191.3585  | 30.3300  | None     | None       | None    | None        | 59.6986            | -47.3115                 | 36.4080                 |</span>
+<span class="sd">            | SDSS J124524.95+302130.6  | star    | 191.3540  | 30.3585  | None     | None       | None    | None        | 59.7431            | 55.4049                  | 22.3502                 |</span>
+<span class="sd">            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Initialisation</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">log</span><span class="p">,</span>
+            <span class="n">ra</span><span class="p">,</span>
+            <span class="n">dec</span><span class="p">,</span>
+            <span class="n">searchRadius</span><span class="p">,</span>
+            <span class="n">nearest</span><span class="p">,</span>
+            <span class="n">outputFormat</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+            <span class="n">galaxyType</span><span class="o">=</span><span class="bp">False</span>
+    <span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">sdss_square_search</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;instansiating a new &#39;cone_search&#39; object&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">ra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">searchRadius</span> <span class="o">=</span> <span class="n">searchRadius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nearest</span> <span class="o">=</span> <span class="n">nearest</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">=</span> <span class="n">outputFormat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span> <span class="o">=</span> <span class="n">galaxyType</span>
+        <span class="c1"># xt-self-arg-tmpx</span>
+
+        <span class="c1"># Initial Actions</span>
+        <span class="c1"># perform the initail square search</span>
+        <span class="n">squareSearch</span> <span class="o">=</span> <span class="n">sdss_square_search</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">ra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span>
+            <span class="n">dec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dec</span><span class="p">,</span>
+            <span class="n">searchRadius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">searchRadius</span><span class="p">,</span>
+            <span class="n">galaxyType</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">squareResults</span> <span class="o">=</span> <span class="n">squareSearch</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="cone_search.close"><a class="viewcode-back" href="../../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+<div class="viewcode-block" id="cone_search.get"><a class="viewcode-back" href="../../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *get the cone_search object*</span>
+
+<span class="sd">        **Return:**</span>
+<span class="sd">            - ``cone_search``</span>
+
+<span class="sd">        .. todo::</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``get`` method&#39;</span><span class="p">)</span>
+
+        <span class="c1"># sort results by angular separation</span>
+        <span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">itemgetter</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">squareResults</span><span class="p">)</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+            <span class="n">results</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">itemgetter</span><span class="p">(</span><span class="s1">&#39;separation_arcsec&#39;</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c1"># order of results</span>
+        <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;sdss_name&quot;</span><span class="p">,</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;ra&quot;</span><span class="p">,</span> <span class="s2">&quot;dec&quot;</span><span class="p">,</span> <span class="s2">&quot;specz&quot;</span><span class="p">,</span> <span class="s2">&quot;specz_err&quot;</span><span class="p">,</span> <span class="s2">&quot;photoz&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;photoz_err&quot;</span><span class="p">,</span> <span class="s2">&quot;separation_arcsec&quot;</span><span class="p">,</span> <span class="s2">&quot;separation_north_arcsec&quot;</span><span class="p">,</span> <span class="s2">&quot;separation_east_arcsec&quot;</span><span class="p">]</span>
+
+        <span class="kn">import</span> <span class="nn">collections</span>
+        <span class="n">orderDict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({}</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+
+        <span class="c1"># filter out results greater than the search radius</span>
+        <span class="n">filteredResults</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">float</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s2">&quot;separation_arcsec&quot;</span><span class="p">])</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">searchRadius</span><span class="p">:</span>
+                <span class="n">orderDict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({}</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+                <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                        <span class="n">orderDict</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+                <span class="n">filteredResults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">orderDict</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearest</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">filteredResults</span><span class="p">):</span>
+            <span class="n">orderDict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({}</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">filteredResults</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                    <span class="n">orderDict</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="n">filteredResults</span> <span class="o">=</span> <span class="p">[</span><span class="n">orderDict</span><span class="p">]</span>
+            <span class="c1"># filteredResults = [filteredResults[0]]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">filteredResults</span><span class="p">):</span>
+            <span class="n">orderDict</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">sorted</span><span class="p">({}</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">headers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span> <span class="o">==</span> <span class="s2">&quot;all&quot;</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span> <span class="o">==</span> <span class="s2">&quot;specz&quot;</span> <span class="ow">and</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;photoz_err&quot;</span><span class="p">,</span> <span class="s2">&quot;photoz&quot;</span><span class="p">])</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">galaxyType</span> <span class="o">==</span> <span class="s2">&quot;photoz&quot;</span> <span class="ow">and</span> <span class="n">h</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;specz&quot;</span><span class="p">,</span> <span class="s2">&quot;specz_err&quot;</span><span class="p">]):</span>
+                    <span class="n">orderDict</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">filteredResults</span> <span class="o">=</span> <span class="p">[</span><span class="n">orderDict</span><span class="p">]</span>
+
+        <span class="c1"># pretty format print</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">outputFormat</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+            <span class="n">csvType</span> <span class="o">=</span> <span class="s2">&quot;machine&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">csvType</span> <span class="o">=</span> <span class="s2">&quot;human&quot;</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">list_of_dictionaries_to_csv</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">datalist</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">filteredResults</span><span class="p">)),</span>
+            <span class="n">csvType</span><span class="o">=</span><span class="n">csvType</span>  <span class="c1"># machine | human</span>
+        <span class="p">)</span>
+
+        <span class="c1"># sdss only allows 60 hits per minute</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``get`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">results</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Dave Young.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
