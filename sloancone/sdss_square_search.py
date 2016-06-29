@@ -22,15 +22,14 @@ import urllib
 import string
 import json
 from docopt import docopt
-from dryxPython import logs as dl
-from dryxPython import astrotools as dat
-from dryxPython import commonutils as dcu
 from fundamentals import tools, times
-
+from astrocalc.coords import unit_conversion, separations, translate
 
 ###################################################################
 # CLASSES                                                         #
 ###################################################################
+
+
 class sdss_square_search():
 
     """
@@ -53,7 +52,7 @@ class sdss_square_search():
             ra,
             dec,
             searchRadius,
-            galaxyType="all"
+            galaxyType=False
     ):
         self.log = log
         log.debug("instansiating a new 'sdss_square_search' object")
@@ -68,16 +67,15 @@ class sdss_square_search():
 
         # Initial Actions
         # convert ra and dec to decimal degrees (if required)
-        try:
-            self.ra = float(self.ra)
-        except:
-            self.ra = dat.ra_sexegesimal_to_decimal.ra_sexegesimal_to_decimal(
-                ra=self.ra)
-        try:
-            self.dec = float(self.dec)
-        except:
-            self.dec = dat.declination_sexegesimal_to_decimal.declination_sexegesimal_to_decimal(
-                dec=self.dec)
+        converter = unit_conversion(
+            log=log
+        )
+        self.ra = float(converter.ra_sexegesimal_to_decimal(
+            ra=self.ra
+        ))
+        self.dec = float(converter.dec_sexegesimal_to_decimal(
+            dec=self.dec
+        ))
 
         self._calculate_search_limits()
         self._build_sql_query()
@@ -124,23 +122,23 @@ class sdss_square_search():
         """
         self.log.info('starting the ``_calculate_search_limits`` method')
 
-        firstShift = dat.shift_coordinates(
-            log=self.log,
-            ra=self.ra,
-            dec=self.dec,
-            north=-self.searchRadius,
-            east=-self.searchRadius,
-        )
-        self.ra1, self.dec1 = firstShift.get()
+        # TRANSLATE COORDINATES ACROSS SKY
 
-        secondShift = dat.shift_coordinates(
+        self.ra1, self.dec1 = translate(
             log=self.log,
             ra=self.ra,
             dec=self.dec,
-            north=self.searchRadius,
-            east=self.searchRadius,
-        )
-        self.ra2, self.dec2 = secondShift.get()
+            northArcsec=-self.searchRadius,
+            eastArcsec=-self.searchRadius
+        ).get()
+
+        self.ra2, self.dec2 = translate(
+            log=self.log,
+            ra=self.ra,
+            dec=self.dec,
+            northArcsec=self.searchRadius,
+            eastArcsec=self.searchRadius
+        ).get()
 
         self.log.info('completed the ``_calculate_search_limits`` method')
         return
@@ -163,7 +161,7 @@ class sdss_square_search():
 
         ra1, ra2, dec1, dec2 = self.ra1, self.ra2, self.dec1, self.dec2
 
-        if self.galaxyType == "all" or not self.galaxyType:
+        if self.galaxyType == "all":
             self.sqlQuery = u"""
                 SELECT p.objiD, p.ra, p.dec, s.z as specz, s.zerr as specz_err, z.z as photoz, z.zerr as photoz_err, p.type
                     FROM PhotoObjAll p
@@ -182,6 +180,14 @@ class sdss_square_search():
                 SELECT p.objiD, p.ra, p.dec, z.z as photoz, z.zerr as photoz_err, p.type
                     FROM PhotoObjAll p, Photoz z
                     WHERE (z.objid = p.objid) and (p.ra between %(ra1)s and %(ra2)s) and (p.dec between %(dec1)s and %(dec2)s) and p.clean = 1 and p.type = 3
+            """ % locals()
+        elif self.galaxyType == False or not self.galaxyType:
+            self.sqlQuery = u"""
+                SELECT p.objiD, p.ra, p.dec, s.z as specz, s.zerr as specz_err, z.z as photoz, z.zerr as photoz_err, p.type
+                    FROM PhotoObjAll p
+                    LEFT JOIN SpecObjAll AS s ON s.bestobjid = p.objid
+                    LEFT JOIN Photoz AS z ON z.objid = p.objid 
+                    WHERE (p.ra between %(ra1)s and %(ra2)s) and (p.dec between %(dec1)s and %(dec2)s) and p.clean = 1 and (p.type = 3 or p.type = 6)
             """ % locals()
 
         self.sqlQuery = self.sqlQuery.strip()
@@ -251,13 +257,17 @@ class sdss_square_search():
             if "ra" not in row:
                 print row
                 exit(0)
-            angularSeparation, northSep, eastSep = dat.get_angular_separation(
+
+            # CALCULATE SEPARATION IN ARCSEC
+            calculator = separations(
                 log=self.log,
                 ra1=self.ra,
                 dec1=self.dec,
                 ra2=row["ra"],
-                dec2=row["dec"]
+                dec2=row["dec"],
             )
+            angularSeparation, northSep, eastSep = calculator.get()
+
             row["separation_arcsec"] = angularSeparation
             row["separation_north_arcsec"] = northSep
             row["separation_east_arcsec"] = eastSep
@@ -282,16 +292,21 @@ class sdss_square_search():
         """
         self.log.info('starting the ``_generate_sdss_object_name`` method')
 
+        converter = unit_conversion(
+            log=self.log
+        )
+
         # Names should be of the format `SDSS JHHMMSS.ss+DDMMSS.s`
         # where the coordinates are truncated, not rounded.
         for row in self.results:
-            raSex = dat.ra_to_sex(
+
+            raSex = converter.ra_decimal_to_sexegesimal(
                 ra=row["ra"],
-                delimiter=':'
+                delimiter=":"
             )
-            decSex = dat.dec_to_sex(
+            decSex = converter.dec_decimal_to_sexegesimal(
                 dec=row["dec"],
-                delimiter=':'
+                delimiter=":"
             )
             raSex = raSex.replace(":", "")[:9]
             decSex = decSex.replace(":", "")[:9]

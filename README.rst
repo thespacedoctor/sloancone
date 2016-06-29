@@ -1,31 +1,32 @@
-sloancone
-=========
+sloancone 
+=========================
 
-*SDSS conesearching tools via the CL. Put down conesearch results, or
-simply check whether or not a location in the sky has been covered by
-SDSS*.
+*SDSS conesearching tools via the CL. Put down conesearch results, or simply check whether or not a location in the sky has been covered by SDSS*.
 
 Usage
-=====
+========
+
+.. todo::
+
+    - add usage
 
 Documentation
 =============
 
-Documentation for sloancone is hosted by [Read the
-Docs](http://sloancone.readthedocs.org/en/stable/) (last [stable
-version](http://sloancone.readthedocs.org/en/stable/) and [latest
-version](http://sloancone.readthedocs.org/en/latest/)).
+Documentation for sloancone is hosted by `Read the Docs <http://sloancone.readthedocs.org/en/stable/>`__ (last `stable version <http://sloancone.readthedocs.org/en/stable/>`__ and `latest version <http://sloancone.readthedocs.org/en/latest/>`__).
 
 Installation
 ============
 
-The easiest way to install sloancone us to use `pip`:
+The easiest way to install sloancone us to use ``pip``:
+
+.. code:: bash
 
     pip install sloancone
 
-Or you can clone the [github
-repo](https://github.com/thespacedoctor/sloancone) and install from a
-local version of the code:
+Or you can clone the `github repo <https://github.com/thespacedoctor/sloancone>`__ and install from a local version of the code:
+
+.. code:: bash
 
     git clone git@github.com:thespacedoctor/sloancone.git
     cd sloancone
@@ -33,7 +34,10 @@ local version of the code:
 
 To upgrade to the latest version of sloancone use the command:
 
+.. code:: bash
+
     pip install sloancone --upgrade
+
 
 Development
 -----------
@@ -41,18 +45,21 @@ Development
 If you want to tinker with the code, then install in development mode.
 This means you can modify the code from your cloned repo:
 
+.. code:: bash
+
     git clone git@github.com:thespacedoctor/sloancone.git
     cd sloancone
     python setup.py develop
 
-[Pull requests](https://github.com/thespacedoctor/sloancone/pulls) are
-welcomed!
+`Pull requests <https://github.com/thespacedoctor/sloancone/pulls>`__
+are welcomed!
+
 
 Issues
 ------
 
 Please report any issues
-[here](https://github.com/thespacedoctor/sloancone/issues).
+`here <https://github.com/thespacedoctor/sloancone/issues>`__.
 
 License
 =======
@@ -77,3 +84,4 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
