@@ -263,7 +263,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'sloancone', u'sloancone Documentation',
-     u'Dave Young', 'sloancone', 'SDSS conesearching tools via the CL. Put down conesearch results, or simply check whether or not a location in the sky has been covered by SDSS',
+     u'Dave Young', 'sloancone', 'SDSS conesearching tools via the CL. Pull down conesearch results, or simply check whether or not a location in the sky has been covered by SDSS.',
      'Miscellaneous'),
 ]
 
