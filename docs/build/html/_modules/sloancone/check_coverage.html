@@ -1,0 +1,483 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sloancone.check_coverage &mdash; sloancone 0.2 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/dryx.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="sloancone 0.2 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> sloancone
+          
+
+          
+            
+            <img src="../../_static/thespacedoctor_icon_white_circle.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#tutorial">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="simple">
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">sloancone</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>sloancone.check_coverage</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sloancone.check_coverage</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/local/bin/python</span>
+<span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">*Given a location in the sky, check SDSS to see if the survey covered that region.*</span>
+
+<span class="sd">:Author:</span>
+<span class="sd">    David Young</span>
+
+<span class="sd">:Date Created:</span>
+<span class="sd">    June 29, 2016</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">################# GLOBAL IMPORTS ####################</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vt100&#39;</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">fundamentals</span> <span class="kn">import</span> <span class="n">tools</span>
+<span class="kn">from</span> <span class="nn">astrocalc.coords</span> <span class="kn">import</span> <span class="n">unit_conversion</span>
+
+
+<span class="c1"># OR YOU CAN REMOVE THE CLASS BELOW AND ADD A WORKER FUNCTION ... SNIPPET TRIGGER BELOW</span>
+<span class="c1"># xt-worker-def</span>
+
+<div class="viewcode-block" id="check_coverage"><a class="viewcode-back" href="../../_api/sloancone.check_coverage.html#sloancone.check_coverage.check_coverage">[docs]</a><span class="k">class</span> <span class="nc">check_coverage</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *The worker class for the check_coverage module*</span>
+
+<span class="sd">    **Key Arguments:**</span>
+<span class="sd">        - ``log`` -- python logger</span>
+<span class="sd">        - ``raDeg`` -- ra in decimal degrees</span>
+<span class="sd">        - ``decDeg`` -- dec in decimal degrees</span>
+<span class="sd">        - ``url`` -- the SDSS URL to ping (DR12 is the default)</span>
+
+<span class="sd">    **Usage:**</span>
+
+<span class="sd">        To test whether or not a location in the sky has been covered by the SDSS survey:</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone import check_coverage</span>
+<span class="sd">            # covered = True | False | 999 (i.e. not sure)</span>
+<span class="sd">            covered = check_coverage(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=122.3343,</span>
+<span class="sd">                dec=45.34343</span>
+<span class="sd">            ).get()  </span>
+
+<span class="sd">            print covered</span>
+
+<span class="sd">            # OUTPUT: True</span>
+
+<span class="sd">        Coordinates can also be given in sexegesimal format:</span>
+
+<span class="sd">        .. code-block:: python </span>
+
+<span class="sd">            from sloancone import check_coverage</span>
+<span class="sd">            covered = check_coverage(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                ra=&quot;12:45:4.45466&quot;,</span>
+<span class="sd">                dec=&quot;-25:22:34.3434&quot;</span>
+<span class="sd">            ).get()</span>
+
+<span class="sd">            print covered</span>
+
+<span class="sd">            # OUTPUT: False</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialisation</span>
+    <span class="c1"># 1. @flagged: what are the unique attrributes for each object? Add them</span>
+    <span class="c1"># to __init__</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">log</span><span class="p">,</span>
+            <span class="n">ra</span><span class="p">,</span>
+            <span class="n">dec</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://skyserver.sdss.org/dr12/en/tools/search/x_sql.aspx&quot;</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;instansiating a new &#39;check_coverage&#39; object&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">ra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="c1"># xt-self-arg-tmpx</span>
+
+        <span class="c1"># 2. @flagged: what are the default attrributes each object could have? Add them to variable attribute set here</span>
+        <span class="c1"># Variable Data Atrributes</span>
+
+        <span class="c1"># 3. @flagged: what variable attrributes need overriden in any baseclass(es) used</span>
+        <span class="c1"># Override Variable Data Atrributes</span>
+
+        <span class="c1"># Initial Actions</span>
+
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">unit_conversion</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">raDeg</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">ra_sexegesimal_to_decimal</span><span class="p">(</span>
+            <span class="n">ra</span><span class="o">=</span><span class="n">ra</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">decDeg</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">dec_sexegesimal_to_decimal</span><span class="p">(</span>
+            <span class="n">dec</span><span class="o">=</span><span class="n">dec</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">None</span>
+
+    <span class="c1"># 4. @flagged: what actions does each object have to be able to perform? Add them here</span>
+    <span class="c1"># Method Attributes</span>
+<div class="viewcode-block" id="check_coverage.get"><a class="viewcode-back" href="../../_api/sloancone.check_coverage.html#sloancone.check_coverage.check_coverage.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *get the check_coverage object*</span>
+
+<span class="sd">        **Return:**</span>
+<span class="sd">            - ``check_coverage``</span>
+
+<span class="sd">        .. todo::</span>
+
+<span class="sd">            - @review: when complete, clean get method</span>
+<span class="sd">            - @review: when complete add logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``get`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query_sdss</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``get`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">match</span></div>
+
+    <span class="k">def</span> <span class="nf">_query_sdss</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;* query sdss*</span>
+
+<span class="sd">        **Key Arguments:**</span>
+<span class="sd">            # -</span>
+
+<span class="sd">        **Return:**</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        **Usage:**</span>
+<span class="sd">            ..  todo::</span>
+
+<span class="sd">                add usage info</span>
+<span class="sd">                create a sublime snippet for usage</span>
+
+<span class="sd">            .. code-block:: python </span>
+
+<span class="sd">                usage code </span>
+
+<span class="sd">        .. todo::</span>
+
+<span class="sd">            - @review: when complete, clean methodName method</span>
+<span class="sd">            - @review: when complete add logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_query_sdss`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">raDeg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raDeg</span><span class="p">)</span>
+        <span class="n">decDeg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decDeg</span><span class="p">)</span>
+
+        <span class="n">raUpper</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">+</span> <span class="mf">0.002</span>
+        <span class="n">raLower</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">-</span> <span class="mf">0.002</span>
+        <span class="n">declUpper</span> <span class="o">=</span> <span class="n">decDeg</span> <span class="o">+</span> <span class="mf">0.02</span>
+        <span class="n">declLower</span> <span class="o">=</span> <span class="n">decDeg</span> <span class="o">-</span> <span class="mf">0.02</span>
+
+        <span class="c1">################ &gt;ACTION(S) ################</span>
+        <span class="n">sqlQuery</span> <span class="o">=</span> <span class="s2">&quot;SELECT TOP 1 rerun, camcol, field FROM PhotoObj WHERE ra BETWEEN </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2"> AND dec BETWEEN </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">raLower</span><span class="p">,</span> <span class="n">raUpper</span><span class="p">,</span> <span class="n">declLower</span><span class="p">,</span> <span class="n">declUpper</span><span class="p">,)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;sqlQuery: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">sqlQuery</span><span class="p">,))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s2">&quot;attempting to determine whether object is in SDSS DR12 footprint&quot;</span><span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_query</span><span class="p">(</span>
+                <span class="n">sql</span><span class="o">=</span><span class="n">sqlQuery</span><span class="p">,</span>
+                <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;html&quot;</span><span class="p">,</span>
+                <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="s2">&quot;could not determine whether object is in SDSS DR12 footprint - failed with this error </span><span class="si">%s</span><span class="s2">: &quot;</span> <span class="o">%</span>
+                <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),))</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;result: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">result</span><span class="p">,))</span>
+
+        <span class="k">if</span> <span class="s2">&quot;No objects have been found&quot;</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">or</span> <span class="s2">&quot;No entries have been found&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">print</span> <span class="s2">&quot;This location </span><span class="si">%(raDeg)s</span><span class="s2">, </span><span class="si">%(decDeg)s</span><span class="s2"> is NOT in the SDSS footprint&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s2">&quot;cornsilk&quot;</span> <span class="ow">in</span> <span class="n">result</span> <span class="ow">or</span> <span class="s2">&quot;Your query output&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="k">print</span> <span class="s2">&quot;This location </span><span class="si">%(raDeg)s</span><span class="s2">, </span><span class="si">%(decDeg)s</span><span class="s2"> IS in the SDSS footprint&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="s2">&quot;minute&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="mi">999</span>
+            <span class="k">print</span> <span class="s2">&quot;Not sure if location </span><span class="si">%(raDeg)s</span><span class="s2">, </span><span class="si">%(decDeg)s</span><span class="s2"> in SDSS, try again shortly&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="k">print</span> <span class="n">result</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="mi">999</span>
+            <span class="k">print</span> <span class="s2">&quot;Not sure if location </span><span class="si">%(raDeg)s</span><span class="s2">, </span><span class="si">%(decDeg)s</span><span class="s2"> in SDSS, here&#39;s the resulting HTML:&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+            <span class="k">print</span> <span class="n">result</span>
+
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;sdss match: </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">match</span><span class="p">,))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``_query_sdss`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">match</span>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="k">def</span> <span class="nf">_query</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">sql</span><span class="p">,</span>
+        <span class="n">url</span><span class="p">,</span>
+        <span class="n">fmt</span><span class="p">,</span>
+        <span class="n">log</span>
+    <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;* query*</span>
+
+<span class="sd">        **Key Arguments:**</span>
+<span class="sd">            # -</span>
+
+<span class="sd">        **Return:**</span>
+<span class="sd">            - None</span>
+
+<span class="sd">        **Usage:**</span>
+<span class="sd">            ..  todo::</span>
+
+<span class="sd">                add usage info</span>
+<span class="sd">                create a sublime snippet for usage</span>
+
+<span class="sd">            .. code-block:: python </span>
+
+<span class="sd">                usage code </span>
+
+<span class="sd">        .. todo::</span>
+
+<span class="sd">            - @review: when complete, clean methodName method</span>
+<span class="sd">            - @review: when complete add logging</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_query`` method&#39;</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span>
+                <span class="n">params</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;cmd&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filtercomment</span><span class="p">(</span><span class="n">sql</span><span class="p">),</span>
+                    <span class="s2">&quot;format&quot;</span><span class="p">:</span> <span class="n">fmt</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">headers</span><span class="o">=</span><span class="p">{</span>
+                    <span class="s2">&quot;Cookie&quot;</span><span class="p">:</span> <span class="s2">&quot;ASP.NET_SessionId=d0fiwrodvk4rdf21gh3jzr3t; SERVERID=dsa003&quot;</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">)</span>
+            <span class="c1"># print(&#39;Response HTTP Status Code: {status_code}&#39;.format(</span>
+            <span class="c1">#     status_code=response.status_code))</span>
+            <span class="c1"># print(&#39;Response HTTP Response Body: {content}&#39;.format(</span>
+            <span class="c1">#     content=response.content))</span>
+        <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span><span class="p">:</span>
+            <span class="k">print</span><span class="p">(</span><span class="s1">&#39;HTTP Request failed&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``_query`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="k">def</span> <span class="nf">_filtercomment</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">sql</span><span class="p">):</span>
+        <span class="s2">&quot;Get rid of comments starting with --&quot;</span>
+        <span class="kn">import</span> <span class="nn">os</span>
+        <span class="n">fsql</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">sql</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">):</span>
+            <span class="n">fsql</span> <span class="o">+=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;--&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span>
+        <span class="k">return</span> <span class="n">fsql</span></div>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="c1"># xt-class-method</span>
+
+    <span class="c1"># 5. @flagged: what actions of the base class(es) need ammending? ammend them here</span>
+    <span class="c1"># Override Method Attributes</span>
+    <span class="c1"># method-override-tmpx</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Dave Young.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.2',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
