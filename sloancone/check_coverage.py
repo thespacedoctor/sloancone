@@ -19,9 +19,6 @@ from fundamentals import tools
 from astrocalc.coords import unit_conversion
 
 
-# OR YOU CAN REMOVE THE CLASS BELOW AND ADD A WORKER FUNCTION ... SNIPPET TRIGGER BELOW
-# xt-worker-def
-
 class check_coverage():
     """
     *The worker class for the check_coverage module*
@@ -66,8 +63,6 @@ class check_coverage():
             # OUTPUT: False
     """
     # Initialisation
-    # 1. @flagged: what are the unique attrributes for each object? Add them
-    # to __init__
 
     def __init__(
             self,
@@ -83,12 +78,6 @@ class check_coverage():
         self.url = url
         # xt-self-arg-tmpx
 
-        # 2. @flagged: what are the default attrributes each object could have? Add them to variable attribute set here
-        # Variable Data Atrributes
-
-        # 3. @flagged: what variable attrributes need overriden in any baseclass(es) used
-        # Override Variable Data Atrributes
-
         # Initial Actions
 
         converter = unit_conversion(
@@ -103,19 +92,12 @@ class check_coverage():
 
         return None
 
-    # 4. @flagged: what actions does each object have to be able to perform? Add them here
-    # Method Attributes
     def get(self):
         """
         *get the check_coverage object*
 
         **Return:**
             - ``check_coverage``
-
-        .. todo::
-
-            - @review: when complete, clean get method
-            - @review: when complete add logging
         """
         self.log.info('starting the ``get`` method')
 
@@ -127,27 +109,6 @@ class check_coverage():
     def _query_sdss(
             self):
         """* query sdss*
-
-        **Key Arguments:**
-            # -
-
-        **Return:**
-            - None
-
-        **Usage:**
-            ..  todo::
-
-                add usage info
-                create a sublime snippet for usage
-
-            .. code-block:: python 
-
-                usage code 
-
-        .. todo::
-
-            - @review: when complete, clean methodName method
-            - @review: when complete add logging
         """
         self.log.info('starting the ``_query_sdss`` method')
 
@@ -201,7 +162,6 @@ class check_coverage():
         self.log.info('completed the ``_query_sdss`` method')
         return match
 
-    # use the tab-trigger below for new method
     def _query(
         self,
         sql,
@@ -210,27 +170,6 @@ class check_coverage():
         log
     ):
         """* query*
-
-        **Key Arguments:**
-            # -
-
-        **Return:**
-            - None
-
-        **Usage:**
-            ..  todo::
-
-                add usage info
-                create a sublime snippet for usage
-
-            .. code-block:: python 
-
-                usage code 
-
-        .. todo::
-
-            - @review: when complete, clean methodName method
-            - @review: when complete add logging
         """
         self.log.info('starting the ``_query`` method')
 
@@ -255,7 +194,6 @@ class check_coverage():
         self.log.info('completed the ``_query`` method')
         return response.content
 
-    # use the tab-trigger below for new method
     def _filtercomment(
             self,
             sql):
@@ -268,7 +206,3 @@ class check_coverage():
 
     # use the tab-trigger below for new method
     # xt-class-method
-
-    # 5. @flagged: what actions of the base class(es) need ammending? ammend them here
-    # Override Method Attributes
-    # method-override-tmpx

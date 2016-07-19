@@ -1,5 +1,5 @@
 .. sloancone documentation master file, created by
-   sphinx-quickstart on Wed Jun 29 15:12:51 2016.
+   sphinx-quickstart on Tue Jul 19 09:10:59 2016.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 

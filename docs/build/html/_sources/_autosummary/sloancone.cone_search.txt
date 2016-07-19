@@ -14,7 +14,6 @@ sloancone.cone_search (*class*)
    .. autosummary::
    
       ~cone_search.__init__
-      ~cone_search.close
       ~cone_search.get
    
    

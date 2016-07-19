@@ -139,19 +139,19 @@ class test_cone_search():
 
         print csResults
 
-    # def test_cone_search_function_exception(self):
+    def test_cone_search_function_exception(self):
 
-    #     from sloancone.cone_search import cone_search
-    #     try:
-    #         this = cone_search(
-    #             log=log,
-    #             fakeKey="break the code"
-    #         )
-    #         this.get()
-    #         assert False
-    #     except Exception, e:
-    #         assert True
-    #         print str(e)
+        from sloancone.cone_search import cone_search
+        try:
+            this = cone_search(
+                log=log,
+                fakeKey="break the code"
+            )
+            this.get()
+            assert False
+        except Exception, e:
+            assert True
+            print str(e)
 
         # x-print-testpage-for-pessto-marshall-web-object
 

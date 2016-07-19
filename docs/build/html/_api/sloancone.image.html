@@ -1,0 +1,278 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>&lt;no title&gt; &mdash; sloancone 0.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../_static/dryx.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="sloancone 0.3 documentation" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> sloancone
+          
+
+          
+            
+            <img src="../_static/thespacedoctor_icon_white_circle.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../_includes/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_includes/index.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_includes/index.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_includes/index.html#tutorial">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../autosummary.html">Subpackages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autosummary.html#modules">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autosummary.html#classes">Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autosummary.html#functions">Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">sloancone</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+ 
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>&lt;no title&gt;</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/_api/sloancone.image.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <span class="target" id="module-sloancone.image"></span><p><em>Given a location and some other parameters, download an SDSS image of that location in the sky</em></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Author:</th><td class="field-body">David Young</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Date Created:</th><td class="field-body">July 18, 2016</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="sloancone.image.image">
+<em class="property">class </em><code class="descclassname">sloancone.image.</code><code class="descname">image</code><span class="sig-paren">(</span><em>log</em>, <em>ra</em>, <em>dec</em>, <em>downloadDirectory='./'</em>, <em>filename='sdss_stamp.jpeg'</em>, <em>settings=False</em>, <em>grid=True</em>, <em>label=False</em>, <em>photocat=False</em>, <em>speccat=False</em>, <em>invertColors=False</em>, <em>arcminWidth=5</em>, <em>pixelWidth=500</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sloancone/image.html#image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sloancone.image.image" title="Permalink to this definition">  ∞</a></dt>
+<dd><p><em>The worker class for the image module</em></p>
+<dl class="docutils">
+<dt><strong>Key Arguments:</strong></dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">log</span></code> &#8211; logger</li>
+<li><code class="docutils literal"><span class="pre">settings</span></code> &#8211; the settings dictionary</li>
+<li><code class="docutils literal"><span class="pre">ra</span></code> &#8211; right-ascension of the sky-location</li>
+<li><code class="docutils literal"><span class="pre">dec</span></code> &#8211; declination of the sky-location</li>
+<li><code class="docutils literal"><span class="pre">downloadDirectory</span></code> &#8211; directory to download the image stamp to. Default <em>./</em></li>
+<li><code class="docutils literal"><span class="pre">filename</span></code> &#8211; path to download the image stamp to. Default <em>&#8220;sdss_stamp.jpeg&#8221;</em></li>
+<li><code class="docutils literal"><span class="pre">grid</span></code> &#8211; include grid and scale in stamp. Default <em>True</em></li>
+<li><code class="docutils literal"><span class="pre">label</span></code> &#8211; label. Default <em>False</em></li>
+<li><code class="docutils literal"><span class="pre">photocat</span></code> &#8211; mark photometrical catalogued sources. Default <em>False</em></li>
+<li><code class="docutils literal"><span class="pre">speccat</span></code> &#8211; mark spectrscopical catalogued objects. Default <em>False</em></li>
+<li><code class="docutils literal"><span class="pre">invertColors</span></code> &#8211; invert the image stamp colors. Default <em>False</em></li>
+<li><code class="docutils literal"><span class="pre">arcminWidth</span></code> &#8211; the width of the image stamp in arcmin. Default <em>5</em></li>
+<li><code class="docutils literal"><span class="pre">pixelWidth</span></code> &#8211; the width of the image stamp in pixels. Default <em>500</em></li>
+</ul>
+</dd>
+</dl>
+<p><strong>Usage:</strong></p>
+<blockquote>
+<div><p>Here&#8217;s an example where we turn on all options before we download the image:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone</span> <span class="kn">import</span> <span class="n">image</span>
+<span class="n">imagestamp</span> <span class="o">=</span> <span class="n">image</span><span class="p">(</span>
+    <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+    <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">,</span>
+    <span class="n">ra</span><span class="o">=</span><span class="s2">&quot;179.689293428354&quot;</span><span class="p">,</span>
+    <span class="n">dec</span><span class="o">=</span><span class="s2">&quot;-0.454379056007667&quot;</span><span class="p">,</span>
+    <span class="n">downloadDirectory</span><span class="o">=</span><span class="s2">&quot;/tmp&quot;</span><span class="p">,</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sdss_stamp.jpeg&quot;</span><span class="p">,</span>
+    <span class="n">grid</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">photocat</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">speccat</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">invertColors</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+    <span class="n">arcminWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+    <span class="n">pixelWidth</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span>
+<span class="n">imagestamp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This produces a stamp at <code class="docutils literal"><span class="pre">/tmp/sdss_stamp.jpeg</span></code> that looks like this:</p>
+<a class="reference internal image-reference" href="https://i.imgur.com/2w4ipqr.png"><img alt="SDSS image stamp with all options turned on" src="https://i.imgur.com/2w4ipqr.png" style="width: 800px;" /></a>
+</div></blockquote>
+<dl class="method">
+<dt id="sloancone.image.image.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sloancone/image.html#image.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sloancone.image.image.get" title="Permalink to this definition">  ∞</a></dt>
+<dd><p><em>download the image</em></p>
+</dd></dl>
+
+</dd></dl>
+
+
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Dave Young.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

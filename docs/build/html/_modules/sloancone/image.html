@@ -1,0 +1,406 @@
+
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>sloancone.image &mdash; sloancone 0.3 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  
+    <link rel="stylesheet" href="../../_static/dryx.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="sloancone 0.3 documentation" href="../../index.html"/>
+        <link rel="up" title="Module code" href="../index.html"/> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> sloancone
+          
+
+          
+            
+            <img src="../../_static/thespacedoctor_icon_white_circle.png" class="logo" />
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                v0.3
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">Getting Started</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#usage">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#documentation">Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../_includes/index.html#tutorial">Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html">Subpackages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#modules">Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#classes">Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autosummary.html#functions">Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../../index.html">sloancone</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../../index.html">Docs</a> &raquo;</li>
+      
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+      
+    <li>sloancone.image</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for sloancone.image</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/local/bin/python</span>
+<span class="c1"># encoding: utf-8</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">*Given a location and some other parameters, download an SDSS image of that location in the sky*</span>
+
+<span class="sd">:Author:</span>
+<span class="sd">    David Young</span>
+
+<span class="sd">:Date Created:</span>
+<span class="sd">    July 18, 2016</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="c1">################# GLOBAL IMPORTS ####################</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;TERM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;vt100&#39;</span>
+<span class="kn">from</span> <span class="nn">fundamentals</span> <span class="kn">import</span> <span class="n">tools</span>
+<span class="kn">from</span> <span class="nn">astrocalc.coords</span> <span class="kn">import</span> <span class="n">unit_conversion</span>
+
+
+<div class="viewcode-block" id="image"><a class="viewcode-back" href="../../_autosummary/sloancone.image.html#sloancone.image.image">[docs]</a><span class="k">class</span> <span class="nc">image</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    *The worker class for the image module*</span>
+
+<span class="sd">    **Key Arguments:**</span>
+<span class="sd">        - ``log`` -- logger</span>
+<span class="sd">        - ``settings`` -- the settings dictionary</span>
+<span class="sd">        - ``ra`` -- right-ascension of the sky-location</span>
+<span class="sd">        - ``dec`` -- declination of the sky-location</span>
+<span class="sd">        - ``downloadDirectory`` -- directory to download the image stamp to. Default *./*</span>
+<span class="sd">        - ``filename`` -- path to download the image stamp to. Default *&quot;sdss_stamp.jpeg&quot;*</span>
+<span class="sd">        - ``grid`` -- include grid and scale in stamp. Default *True*</span>
+<span class="sd">        - ``label`` -- label. Default *False*</span>
+<span class="sd">        - ``photocat`` -- mark photometrical catalogued sources. Default *False*</span>
+<span class="sd">        - ``speccat`` -- mark spectrscopical catalogued objects. Default *False*</span>
+<span class="sd">        - ``invertColors`` -- invert the image stamp colors. Default *False*</span>
+<span class="sd">        - ``arcminWidth`` -- the width of the image stamp in arcmin. Default *5*</span>
+<span class="sd">        - ``pixelWidth`` -- the width of the image stamp in pixels. Default *500*</span>
+
+<span class="sd">    **Usage:**</span>
+
+<span class="sd">        Here&#39;s an example where we turn on all options before we download the image:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            from sloancone import image</span>
+<span class="sd">            imagestamp = image(</span>
+<span class="sd">                log=log,</span>
+<span class="sd">                settings=settings,</span>
+<span class="sd">                ra=&quot;179.689293428354&quot;,</span>
+<span class="sd">                dec=&quot;-0.454379056007667&quot;,</span>
+<span class="sd">                downloadDirectory=&quot;/tmp&quot;,</span>
+<span class="sd">                filename=&quot;sdss_stamp.jpeg&quot;,</span>
+<span class="sd">                grid=True,</span>
+<span class="sd">                label=True,</span>
+<span class="sd">                photocat=True,</span>
+<span class="sd">                speccat=True,</span>
+<span class="sd">                invertColors=True,</span>
+<span class="sd">                arcminWidth=5,</span>
+<span class="sd">                pixelWidth=500</span>
+<span class="sd">            )</span>
+<span class="sd">            imagestamp.get()</span>
+
+<span class="sd">        This produces a stamp at ``/tmp/sdss_stamp.jpeg`` that looks like this:</span>
+
+<span class="sd">        .. image:: https://i.imgur.com/2w4ipqr.png</span>
+<span class="sd">            :width: 800px</span>
+<span class="sd">            :alt: SDSS image stamp with all options turned on</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Initialisation</span>
+
+<div class="viewcode-block" id="image.__init__"><a class="viewcode-back" href="../../_autosummary/sloancone.image.html#sloancone.image.image.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span>
+            <span class="n">log</span><span class="p">,</span>
+            <span class="n">ra</span><span class="p">,</span>
+            <span class="n">dec</span><span class="p">,</span>
+            <span class="n">downloadDirectory</span><span class="o">=</span><span class="s2">&quot;./&quot;</span><span class="p">,</span>
+            <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;sdss_stamp.jpeg&quot;</span><span class="p">,</span>
+            <span class="n">settings</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">grid</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">photocat</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">speccat</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">invertColors</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">arcminWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+            <span class="n">pixelWidth</span><span class="o">=</span><span class="mi">500</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span> <span class="o">=</span> <span class="n">log</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;instansiating a new &#39;image&#39; object&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">settings</span> <span class="o">=</span> <span class="n">settings</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ra</span> <span class="o">=</span> <span class="n">ra</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">downloadDirectory</span> <span class="o">=</span> <span class="n">downloadDirectory</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">label</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">photocat</span> <span class="o">=</span> <span class="n">photocat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speccat</span> <span class="o">=</span> <span class="n">speccat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">invertColors</span> <span class="o">=</span> <span class="n">invertColors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">arcminWidth</span> <span class="o">=</span> <span class="n">arcminWidth</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixelWidth</span> <span class="o">=</span> <span class="n">pixelWidth</span>
+
+        <span class="c1"># xt-self-arg-tmpx</span>
+
+        <span class="c1"># INITIAL ACTIONS</span>
+        <span class="c1"># CHECK SDSS COVERAGE BEFORE DOWNLOAD ATTEMPT</span>
+        <span class="kn">from</span> <span class="nn">check_coverage</span> <span class="kn">import</span> <span class="n">check_coverage</span>
+        <span class="c1"># covered = True | False | 999 (i.e. not sure)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">=</span> <span class="n">check_coverage</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">ra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span><span class="p">,</span>
+            <span class="n">dec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+<div class="viewcode-block" id="image.get"><a class="viewcode-back" href="../../_api/sloancone.image.html#sloancone.image.image.get">[docs]</a>    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        *download the image*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``get`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">ra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ra</span>
+        <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="mi">999</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="s2">&quot;999&quot;</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_download_sdss_image</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``get`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span></div>
+
+    <span class="k">def</span> <span class="nf">_download_sdss_image</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;*download sdss image*</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;starting the ``_download_sdss_image`` method&#39;</span><span class="p">)</span>
+
+        <span class="n">opt</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">grid</span><span class="p">:</span>
+            <span class="n">opt</span> <span class="o">+=</span> <span class="s2">&quot;G&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+            <span class="n">opt</span> <span class="o">+=</span> <span class="s2">&quot;L&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">photocat</span><span class="p">:</span>
+            <span class="n">opt</span> <span class="o">+=</span> <span class="s2">&quot;P&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">speccat</span><span class="p">:</span>
+            <span class="n">opt</span> <span class="o">+=</span> <span class="s2">&quot;S&quot;</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invertColors</span><span class="p">:</span>
+            <span class="n">opt</span> <span class="o">+=</span> <span class="s2">&quot;I&quot;</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opt</span><span class="p">):</span>
+            <span class="n">opt</span> <span class="o">=</span> <span class="s2">&quot;opt=</span><span class="si">%(opt)s</span><span class="s2">&amp;&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
+
+        <span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixelWidth</span>
+
+        <span class="n">scale</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arcminWidth</span> <span class="o">*</span> <span class="mf">60.</span><span class="p">)</span> <span class="o">/</span> <span class="n">width</span>
+
+        <span class="n">converter</span> <span class="o">=</span> <span class="n">unit_conversion</span><span class="p">(</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span>
+        <span class="p">)</span>
+        <span class="n">ra</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">ra_sexegesimal_to_decimal</span><span class="p">(</span>
+            <span class="n">ra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ra</span>
+        <span class="p">)</span>
+        <span class="n">dec</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">dec_sexegesimal_to_decimal</span><span class="p">(</span>
+            <span class="n">dec</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
+        <span class="p">)</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;http://skyservice.pha.jhu.edu/DR12/ImgCutout/getjpeg.aspx?ra=</span><span class="si">%(ra)s</span><span class="s2">&amp;dec=</span><span class="si">%(dec)s</span><span class="s2">&amp;scale=</span><span class="si">%(scale)s</span><span class="s2">&amp;</span><span class="si">%(opt)s</span><span class="s2">PhotoObjs=on&amp;width=</span><span class="si">%(width)s</span><span class="s2">&amp;height=</span><span class="si">%(width)s</span><span class="s2">&quot;&quot;&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">(</span>
+        <span class="p">)</span>
+
+        <span class="kn">from</span> <span class="nn">fundamentals.download</span> <span class="kn">import</span> <span class="n">multiobject_download</span>
+        <span class="n">localUrls</span> <span class="o">=</span> <span class="n">multiobject_download</span><span class="p">(</span>
+            <span class="n">urlList</span><span class="o">=</span><span class="p">[</span><span class="n">url</span><span class="p">],</span>
+            <span class="n">downloadDirectory</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">downloadDirectory</span><span class="p">,</span>
+            <span class="n">log</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+            <span class="n">timeStamp</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+            <span class="n">timeout</span><span class="o">=</span><span class="mi">180</span><span class="p">,</span>
+            <span class="n">concurrentDownloads</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+            <span class="n">resetFilename</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">],</span>
+            <span class="n">credentials</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>  <span class="c1"># { &#39;username&#39; : &quot;...&quot;, &quot;password&quot;, &quot;...&quot; }</span>
+            <span class="n">longTime</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+            <span class="n">indexFilenames</span><span class="o">=</span><span class="bp">False</span>
+        <span class="p">)</span>
+
+        <span class="k">print</span> <span class="n">url</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``_download_sdss_image`` method&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">None</span></div>
+
+    <span class="c1"># use the tab-trigger below for new method</span>
+    <span class="c1"># xt-class-method</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2016, Dave Young.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'0.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
