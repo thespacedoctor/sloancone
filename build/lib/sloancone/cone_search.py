@@ -31,10 +31,6 @@ class cone_search():
         - ``outputFormat`` -- output format (table or csv)
 
     **Usage:**
-        .. todo::
-
-            - add usage info
-            - create a sublime snippet for usage
 
         .. code-block:: python 
 
@@ -212,18 +208,12 @@ class cone_search():
 
         return None
 
-    def close(self):
-        del self
-        return None
-
     def get(self):
         """
         *get the cone_search object*
 
         **Return:**
-            - ``cone_search``
-
-        .. todo::
+            - ``results`` -- the results of the conesearch
 
         """
         self.log.info('starting the ``get`` method')
