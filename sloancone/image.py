@@ -122,12 +122,12 @@ class image():
         ra = self.ra
         dec = self.dec
         if self.covered == False or self.covered == 999 or self.covered == "999":
-            return
+            return self.covered
 
         self._download_sdss_image()
 
         self.log.info('completed the ``get`` method')
-        return
+        return self.covered
 
     def _download_sdss_image(
             self):
