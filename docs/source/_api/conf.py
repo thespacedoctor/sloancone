@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # sloancone documentation build configuration file, created by
-# sphinx-quickstart on Mon Jul 18 15:36:37 2016.
+# sphinx-quickstart on Tue Jul 19 09:10:59 2016.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
