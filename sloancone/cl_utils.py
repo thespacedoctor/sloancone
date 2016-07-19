@@ -10,7 +10,7 @@ Usage:
     COMMANDS
     ========
     search                do a conesearch and report the resulting matches
-    covered              test whether or not a location in the sky was covered by SDSS
+    covered               test whether or not a location in the sky was covered by SDSS
 
     -h, --help            show this help message
     -n, --nearest         show closest match only
@@ -127,6 +127,7 @@ def main(arguments=None):
             ra=ra,
             dec=dec
         ).get()
+        print check
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()

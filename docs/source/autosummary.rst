@@ -29,6 +29,7 @@ Classes
 
    sloancone.check_coverage
    sloancone.cone_search
+   sloancone.image
    sloancone.sdss_square_search
    sloancone.utKit.utKit 
 

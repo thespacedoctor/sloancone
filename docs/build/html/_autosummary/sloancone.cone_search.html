@@ -40,7 +40,7 @@
   
     <link rel="top" title="sloancone 0.2.1 documentation" href="../index.html"/>
         <link rel="up" title="Subpackages" href="../autosummary.html"/>
-        <link rel="next" title="sloancone.sdss_square_search (class)" href="sloancone.sdss_square_search.html"/>
+        <link rel="next" title="sloancone.image (class)" href="sloancone.image.html"/>
         <link rel="prev" title="sloancone.check_coverage (class)" href="sloancone.check_coverage.html"/> 
 
   
@@ -107,6 +107,7 @@
 <li class="toctree-l1 current"><a class="reference internal" href="../autosummary.html#classes">Classes</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sloancone.check_coverage.html">sloancone.check_coverage (<em>class</em>)</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">sloancone.cone_search (<em>class</em>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sloancone.image.html">sloancone.image (<em>class</em>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sloancone.sdss_square_search.html">sloancone.sdss_square_search (<em>class</em>)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="sloancone.utKit.utKit.html">sloancone.utKit.utKit (<em>class</em>)</a></li>
 </ul>
@@ -175,15 +176,10 @@
 <li><code class="docutils literal"><span class="pre">outputFormat</span></code> &#8211; output format (table or csv)</li>
 </ul>
 </dd>
-<dt><strong>Usage:</strong></dt>
-<dd><div class="admonition-todo first admonition" id="index-0">
-<p class="first admonition-title">Todo</p>
-<ul class="last simple">
-<li>add usage info</li>
-<li>create a sublime snippet for usage</li>
-</ul>
-</div>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone.cone_search</span> <span class="kn">import</span> <span class="n">cone_search</span>
+</dl>
+<p><strong>Usage:</strong></p>
+<blockquote>
+<div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone.cone_search</span> <span class="kn">import</span> <span class="n">cone_search</span>
 <span class="n">csResults</span> <span class="o">=</span> <span class="n">cone_search</span><span class="p">(</span>
     <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
     <span class="n">ra</span><span class="o">=</span><span class="s2">&quot;12:45:23.2323&quot;</span><span class="p">,</span>
@@ -288,7 +284,7 @@ SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273
 <span class="k">print</span> <span class="n">csResults</span>
 </pre></div>
 </div>
-<div class="last highlight-plain"><div class="highlight"><pre><span></span>+---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+<div class="highlight-plain"><div class="highlight"><pre><span></span>+---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
 | sdss_name                 | type    | ra        | dec      | specz    | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
 +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
 | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None     | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
@@ -309,8 +305,7 @@ SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273
 +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
 </pre></div>
 </div>
-</dd>
-</dl>
+</div></blockquote>
 <dl class="method">
 <dt id="sloancone.cone_search.__init__">
 <code class="descname">__init__</code><span class="sig-paren">(</span><em>log</em>, <em>ra</em>, <em>dec</em>, <em>searchRadius</em>, <em>nearest</em>, <em>outputFormat='table'</em>, <em>galaxyType=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/sloancone/cone_search.html#cone_search.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sloancone.cone_search.__init__" title="Permalink to this definition">  ∞</a></dt>
@@ -326,10 +321,7 @@ SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code>(log,&nbsp;ra,&nbsp;dec,&nbsp;searchRadius,&nbsp;nearest)</td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.close" title="sloancone.cone_search.cone_search.close"><code class="xref py py-obj docutils literal"><span class="pre">close</span></code></a>()</td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.get" title="sloancone.cone_search.cone_search.get"><code class="xref py py-obj docutils literal"><span class="pre">get</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.get" title="sloancone.cone_search.cone_search.get"><code class="xref py py-obj docutils literal"><span class="pre">get</span></code></a>()</td>
 <td><em>get the cone_search object</em></td>
 </tr>
 </tbody>
@@ -345,7 +337,7 @@ SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="sloancone.sdss_square_search.html" class="btn btn-neutral float-right" title="sloancone.sdss_square_search (class)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sloancone.image.html" class="btn btn-neutral float-right" title="sloancone.image (class)" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="sloancone.check_coverage.html" class="btn btn-neutral" title="sloancone.check_coverage (class)" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
