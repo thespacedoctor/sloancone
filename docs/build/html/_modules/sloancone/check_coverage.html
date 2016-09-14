@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sloancone.check_coverage &mdash; sloancone 0.3 documentation</title>
+  <title>sloancone.check_coverage &mdash; sloancone 0.3.3 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   
 
   
-    <link rel="top" title="sloancone 0.3 documentation" href="../../index.html"/>
+    <link rel="top" title="sloancone 0.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                v0.3
+                v0.3.3
               </div>
             
           
@@ -266,8 +266,8 @@
         <span class="n">raDeg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">raDeg</span><span class="p">)</span>
         <span class="n">decDeg</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">decDeg</span><span class="p">)</span>
 
-        <span class="n">raUpper</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">+</span> <span class="mf">0.002</span>
-        <span class="n">raLower</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">-</span> <span class="mf">0.002</span>
+        <span class="n">raUpper</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">+</span> <span class="mf">0.02</span>
+        <span class="n">raLower</span> <span class="o">=</span> <span class="n">raDeg</span> <span class="o">-</span> <span class="mf">0.02</span>
         <span class="n">declUpper</span> <span class="o">=</span> <span class="n">decDeg</span> <span class="o">+</span> <span class="mf">0.02</span>
         <span class="n">declLower</span> <span class="o">=</span> <span class="n">decDeg</span> <span class="o">-</span> <span class="mf">0.02</span>
 
@@ -305,6 +305,8 @@
             <span class="n">match</span> <span class="o">=</span> <span class="mi">999</span>
             <span class="k">print</span> <span class="s2">&quot;Not sure if location </span><span class="si">%(raDeg)s</span><span class="s2">, </span><span class="si">%(decDeg)s</span><span class="s2"> in SDSS, here&#39;s the resulting HTML:&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
             <span class="k">print</span> <span class="n">result</span>
+
+        <span class="k">print</span> <span class="s2">&quot;  See for yourself: http://skyserver.sdss.org/dr12/en/tools/chart/image.aspx?ra=</span><span class="si">%(raDeg)s</span><span class="s2">&amp;dec=</span><span class="si">%(decDeg)s</span><span class="s2">&amp;scale=0.8&amp;opt=G&amp;PhotoObjs=off&amp;width=500&amp;height=500&quot;</span> <span class="o">%</span> <span class="nb">locals</span><span class="p">()</span>
 
         <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 
@@ -390,7 +392,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.3',
+            VERSION:'0.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

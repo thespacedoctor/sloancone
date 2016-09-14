@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sloancone.image (class) &mdash; sloancone 0.3 documentation</title>
+  <title>sloancone.image (class) &mdash; sloancone 0.3.3 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   
 
   
-    <link rel="top" title="sloancone 0.3 documentation" href="../index.html"/>
+    <link rel="top" title="sloancone 0.3.3 documentation" href="../index.html"/>
         <link rel="up" title="Subpackages" href="../autosummary.html"/>
         <link rel="next" title="sloancone.sdss_square_search (class)" href="sloancone.sdss_square_search.html"/>
         <link rel="prev" title="sloancone.cone_search (class)" href="sloancone.cone_search.html"/> 
@@ -72,7 +72,7 @@
             
             
               <div class="version">
-                v0.3
+                v0.3.3
               </div>
             
           
@@ -183,6 +183,11 @@
 <li><code class="docutils literal"><span class="pre">pixelWidth</span></code> &#8211; the width of the image stamp in pixels. Default <em>500</em></li>
 </ul>
 </dd>
+<dt><strong>Return:</strong></dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">covered</span></code> &#8211; the coverage result. True | False | 999 (i.e. not sure)</li>
+</ul>
+</dd>
 </dl>
 <p><strong>Usage:</strong></p>
 <blockquote>
@@ -203,7 +208,8 @@
     <span class="n">arcminWidth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
     <span class="n">pixelWidth</span><span class="o">=</span><span class="mi">500</span>
 <span class="p">)</span>
-<span class="n">imagestamp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="c1"># covered = True | False | 999 (i.e. not sure)</span>
+<span class="n">covered</span> <span class="o">=</span> <span class="n">imagestamp</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>This produces a stamp at <code class="docutils literal"><span class="pre">/tmp/sdss_stamp.jpeg</span></code> that looks like this:</p>
@@ -274,7 +280,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3',
+            VERSION:'0.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true

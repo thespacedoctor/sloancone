@@ -10,7 +10,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>sloancone.image &mdash; sloancone 0.3 documentation</title>
+  <title>sloancone.image &mdash; sloancone 0.3.3 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   
 
   
-    <link rel="top" title="sloancone 0.3 documentation" href="../../index.html"/>
+    <link rel="top" title="sloancone 0.3.3 documentation" href="../../index.html"/>
         <link rel="up" title="Module code" href="../index.html"/> 
 
   
@@ -70,7 +70,7 @@
             
             
               <div class="version">
-                v0.3
+                v0.3.3
               </div>
             
           
@@ -187,6 +187,9 @@
 <span class="sd">        - ``arcminWidth`` -- the width of the image stamp in arcmin. Default *5*</span>
 <span class="sd">        - ``pixelWidth`` -- the width of the image stamp in pixels. Default *500*</span>
 
+<span class="sd">    **Return:**</span>
+<span class="sd">        - ``covered`` -- the coverage result. True | False | 999 (i.e. not sure)</span>
+
 <span class="sd">    **Usage:**</span>
 
 <span class="sd">        Here&#39;s an example where we turn on all options before we download the image:</span>
@@ -209,7 +212,8 @@
 <span class="sd">                arcminWidth=5,</span>
 <span class="sd">                pixelWidth=500</span>
 <span class="sd">            )</span>
-<span class="sd">            imagestamp.get()</span>
+<span class="sd">            # covered = True | False | 999 (i.e. not sure)</span>
+<span class="sd">            covered = imagestamp.get()</span>
 
 <span class="sd">        This produces a stamp at ``/tmp/sdss_stamp.jpeg`` that looks like this:</span>
 
@@ -273,12 +277,12 @@
         <span class="n">ra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ra</span>
         <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dec</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="bp">False</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="mi">999</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span> <span class="o">==</span> <span class="s2">&quot;999&quot;</span><span class="p">:</span>
-            <span class="k">return</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_download_sdss_image</span><span class="p">()</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;completed the ``get`` method&#39;</span><span class="p">)</span>
-        <span class="k">return</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">covered</span></div>
 
     <span class="k">def</span> <span class="nf">_download_sdss_image</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">):</span>
@@ -375,7 +379,7 @@
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../../',
-            VERSION:'0.3',
+            VERSION:'0.3.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  true
