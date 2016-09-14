@@ -115,8 +115,8 @@ class check_coverage():
         raDeg = float(self.raDeg)
         decDeg = float(self.decDeg)
 
-        raUpper = raDeg + 0.002
-        raLower = raDeg - 0.002
+        raUpper = raDeg + 0.02
+        raLower = raDeg - 0.02
         declUpper = decDeg + 0.02
         declLower = decDeg - 0.02
 
@@ -154,6 +154,8 @@ class check_coverage():
             match = 999
             print "Not sure if location %(raDeg)s, %(decDeg)s in SDSS, here's the resulting HTML:" % locals()
             print result
+
+        print "  See for yourself: http://skyserver.sdss.org/dr12/en/tools/chart/image.aspx?ra=%(raDeg)s&dec=%(decDeg)s&scale=0.8&opt=G&PhotoObjs=off&width=500&height=500" % locals()
 
         time.sleep(1)
 
