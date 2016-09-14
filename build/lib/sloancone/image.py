@@ -36,6 +36,9 @@ class image():
         - ``arcminWidth`` -- the width of the image stamp in arcmin. Default *5*
         - ``pixelWidth`` -- the width of the image stamp in pixels. Default *500*
 
+    **Return:**
+        - ``covered`` -- the coverage result. True | False | 999 (i.e. not sure)
+
     **Usage:**
 
         Here's an example where we turn on all options before we download the image:
@@ -58,7 +61,8 @@ class image():
                 arcminWidth=5,
                 pixelWidth=500
             )
-            imagestamp.get()
+            # covered = True | False | 999 (i.e. not sure)
+            covered = imagestamp.get()
 
         This produces a stamp at ``/tmp/sdss_stamp.jpeg`` that looks like this:
 
@@ -122,12 +126,12 @@ class image():
         ra = self.ra
         dec = self.dec
         if self.covered == False or self.covered == 999 or self.covered == "999":
-            return
+            return self.covered
 
         self._download_sdss_image()
 
         self.log.info('completed the ``get`` method')
-        return
+        return self.covered
 
     def _download_sdss_image(
             self):
