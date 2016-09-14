@@ -15,7 +15,7 @@ import os
 from time import sleep
 os.environ['TERM'] = 'vt100'
 from fundamentals import tools, times
-from fundamentals.files import list_of_dictionaries_to_csv
+from fundamentals.renderer import list_of_dictionaries
 
 
 class cone_search():
@@ -259,16 +259,14 @@ class cone_search():
             filteredResults = [orderDict]
 
         # pretty format print
-        if self.outputFormat == "csv":
-            csvType = "machine"
-        else:
-            csvType = "human"
-
-        results = list_of_dictionaries_to_csv(
+        dataSet = list_of_dictionaries(
             log=self.log,
-            datalist=list(reversed(filteredResults)),
-            csvType=csvType  # machine | human
+            listOfDictionaries=list(reversed(filteredResults))
         )
+        if self.outputFormat == "csv":
+            results = dataSet.csv()
+        else:
+            results = dataSet.table()
 
         # sdss only allows 60 hits per minute
         sleep(1)
