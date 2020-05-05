@@ -121,7 +121,7 @@ class image():
         """
         *download the image*
         """
-        self.log.info('starting the ``get`` method')
+        self.log.debug('starting the ``get`` method')
 
         ra = self.ra
         dec = self.dec
@@ -130,14 +130,14 @@ class image():
 
         self._download_sdss_image()
 
-        self.log.info('completed the ``get`` method')
+        self.log.debug('completed the ``get`` method')
         return self.covered
 
     def _download_sdss_image(
             self):
         """*download sdss image*
         """
-        self.log.info('starting the ``_download_sdss_image`` method')
+        self.log.debug('starting the ``_download_sdss_image`` method')
 
         opt = ""
         if self.grid:
@@ -190,7 +190,7 @@ class image():
 
         print url
 
-        self.log.info('completed the ``_download_sdss_image`` method')
+        self.log.debug('completed the ``_download_sdss_image`` method')
         return None
 
     # use the tab-trigger below for new method

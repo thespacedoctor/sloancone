@@ -11,8 +11,7 @@ su = tools(
     docString=__doc__,
     logLevel="WARNING",
     options_first=False,
-    projectName="sloancone",
-    tunnel=False
+    projectName="sloancone"
 )
 arguments, settings, log, dbConn = su.setup()
 
@@ -29,7 +28,7 @@ log, dbConn, pathToInputDir, pathToOutputDir = utKit.setupModule()
 utKit.tearDownModule()
 
 
-class test_cone_search():
+class test_cone_search(unittest.TestCase):
 
     def test_cone_search_function(self):
 

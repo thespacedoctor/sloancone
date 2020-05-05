@@ -45,8 +45,7 @@ def main(arguments=None):
         docString=__doc__,
         logLevel="WARNING",
         options_first=True,
-        projectName="sloancone",
-        tunnel=False
+        projectName="sloancone"
     )
     arguments, settings, log, dbConn = su.setup()
 
@@ -185,8 +184,7 @@ def main(arguments=None):
         docString=__doc__,
         logLevel="DEBUG",
         options_first=False,
-        projectName="sloancone",
-        tunnel=False
+        projectName="sloancone"
     )
     arguments, settings, log, dbConn = su.setup()
 

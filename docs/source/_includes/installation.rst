@@ -1,7 +1,7 @@
 Installation
 ============
 
-The easiest way to install sloancone us to use ``pip``:
+The easiest way to install sloancone is to use ``pip``:
 
 .. code:: bash
 

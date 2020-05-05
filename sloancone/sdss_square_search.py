@@ -97,13 +97,13 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``get`` method')
+        self.log.debug('starting the ``get`` method')
 
         self._execute_sql_query()
         self._append_separations_to_results()
         self._generate_sdss_object_name()
 
-        self.log.info('completed the ``get`` method')
+        self.log.debug('completed the ``get`` method')
         return self.results
 
     def _calculate_search_limits(
@@ -120,7 +120,7 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``_calculate_search_limits`` method')
+        self.log.debug('starting the ``_calculate_search_limits`` method')
 
         # TRANSLATE COORDINATES ACROSS SKY
 
@@ -140,7 +140,7 @@ class sdss_square_search():
             eastArcsec=self.searchRadius
         ).get()
 
-        self.log.info('completed the ``_calculate_search_limits`` method')
+        self.log.debug('completed the ``_calculate_search_limits`` method')
         return
 
     def _build_sql_query(
@@ -157,7 +157,7 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``_build_sql_query`` method')
+        self.log.debug('starting the ``_build_sql_query`` method')
 
         ra1, ra2, dec1, dec2 = self.ra1, self.ra2, self.dec1, self.dec2
 
@@ -192,7 +192,7 @@ class sdss_square_search():
 
         self.sqlQuery = self.sqlQuery.strip()
 
-        self.log.info('completed the ``_build_sql_query`` method')
+        self.log.debug('completed the ``_build_sql_query`` method')
         return None
 
     def _execute_sql_query(
@@ -209,7 +209,7 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``_execute_sql_query`` method')
+        self.log.debug('starting the ``_execute_sql_query`` method')
 
         # generate the api call url
         params = urllib.urlencode({'cmd': self.sqlQuery, 'format': "json"})
@@ -234,7 +234,7 @@ class sdss_square_search():
         results = json.loads(results)[0]
         self.results = results["Rows"]
 
-        self.log.info('completed the ``_execute_sql_query`` method')
+        self.log.debug('completed the ``_execute_sql_query`` method')
         return
 
     def _append_separations_to_results(
@@ -251,7 +251,8 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``_append_separations_to_results`` method')
+        self.log.debug(
+            'starting the ``_append_separations_to_results`` method')
 
         for row in self.results:
             if "ra" not in row:
@@ -272,7 +273,7 @@ class sdss_square_search():
             row["separation_north_arcsec"] = northSep
             row["separation_east_arcsec"] = eastSep
 
-        self.log.info(
+        self.log.debug(
             'completed the ``_append_separations_to_results`` method')
         return None
 
@@ -290,7 +291,7 @@ class sdss_square_search():
         .. todo::
 
         """
-        self.log.info('starting the ``_generate_sdss_object_name`` method')
+        self.log.debug('starting the ``_generate_sdss_object_name`` method')
 
         converter = unit_conversion(
             log=self.log
@@ -318,7 +319,7 @@ class sdss_square_search():
             numberType = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
             row["type"] = wordType[row["type"]]
 
-        self.log.info('completed the ``_generate_sdss_object_name`` method')
+        self.log.debug('completed the ``_generate_sdss_object_name`` method')
         return None
 
     # use the tab-trigger below for new method

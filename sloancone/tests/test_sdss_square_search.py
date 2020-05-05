@@ -13,7 +13,7 @@ utKit.tearDownModule()
 # xnose-class-to-test-main-command-line-function-of-module
 
 
-class test_sdss_square_search():
+class test_sdss_square_search(unittest.TestCase):
 
     def test_sdss_square_search_function_01(self):
         kwargs = {}

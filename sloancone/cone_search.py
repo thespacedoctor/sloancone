@@ -216,7 +216,7 @@ class cone_search():
             - ``results`` -- the results of the conesearch
 
         """
-        self.log.info('starting the ``get`` method')
+        self.log.debug('starting the ``get`` method')
 
         # sort results by angular separation
         from operator import itemgetter
@@ -271,5 +271,5 @@ class cone_search():
         # sdss only allows 60 hits per minute
         sleep(1)
 
-        self.log.info('completed the ``get`` method')
+        self.log.debug('completed the ``get`` method')
         return results

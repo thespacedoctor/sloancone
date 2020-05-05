@@ -99,18 +99,18 @@ class check_coverage():
         **Return:**
             - ``check_coverage``
         """
-        self.log.info('starting the ``get`` method')
+        self.log.debug('starting the ``get`` method')
 
         match = self._query_sdss()
 
-        self.log.info('completed the ``get`` method')
+        self.log.debug('completed the ``get`` method')
         return match
 
     def _query_sdss(
             self):
         """* query sdss*
         """
-        self.log.info('starting the ``_query_sdss`` method')
+        self.log.debug('starting the ``_query_sdss`` method')
 
         raDeg = float(self.raDeg)
         decDeg = float(self.decDeg)
@@ -161,7 +161,7 @@ class check_coverage():
 
         self.log.debug('sdss match: %s' % (match,))
 
-        self.log.info('completed the ``_query_sdss`` method')
+        self.log.debug('completed the ``_query_sdss`` method')
         return match
 
     def _query(
@@ -173,7 +173,7 @@ class check_coverage():
     ):
         """* query*
         """
-        self.log.info('starting the ``_query`` method')
+        self.log.debug('starting the ``_query`` method')
 
         try:
             response = requests.get(
@@ -193,7 +193,7 @@ class check_coverage():
         except requests.exceptions.RequestException:
             print('HTTP Request failed')
 
-        self.log.info('completed the ``_query`` method')
+        self.log.debug('completed the ``_query`` method')
         return response.content
 
     def _filtercomment(
