@@ -45,7 +45,7 @@ class cone_search():
                 galaxyType="all"
             ).get()
 
-            print csResults 
+            print(csResults )
 
         This code outputs the following:
 
@@ -79,7 +79,7 @@ class cone_search():
                 galaxyType="all"
             ).get()
 
-            print csResults
+            print(csResults)
 
         This code outputs the following:
 
@@ -103,7 +103,7 @@ class cone_search():
                 galaxyType="specz"
             ).get()
 
-            print csResults 
+            print(csResults )
 
         This code outputs the following:
 
@@ -148,7 +148,7 @@ class cone_search():
                 galaxyType=False
             ).get()
 
-            print csResults
+            print(csResults)
 
         .. code-block:: plain
 
@@ -237,7 +237,7 @@ class cone_search():
             if float(row["separation_arcsec"]) < self.searchRadius:
                 orderDict = collections.OrderedDict(sorted({}.items()))
                 for h in headers:
-                    if h in row.keys():
+                    if h in list(row.keys()):
                         orderDict[h] = row[h]
                 filteredResults.append(orderDict)
             else:

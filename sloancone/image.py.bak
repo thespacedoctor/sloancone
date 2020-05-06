@@ -9,8 +9,6 @@
 :Date Created:
     July 18, 2016
 """
-from __future__ import print_function
-from __future__ import absolute_import
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -109,7 +107,7 @@ class image():
 
         # INITIAL ACTIONS
         # CHECK SDSS COVERAGE BEFORE DOWNLOAD ATTEMPT
-        from .check_coverage import check_coverage
+        from check_coverage import check_coverage
         # covered = True | False | 999 (i.e. not sure)
         self.covered = check_coverage(
             log=log,
@@ -190,7 +188,7 @@ class image():
             indexFilenames=False
         )
 
-        print(url)
+        print url
 
         self.log.debug('completed the ``_download_sdss_image`` method')
         return None

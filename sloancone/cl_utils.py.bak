@@ -17,7 +17,6 @@ Usage:
     -f, --format          which format to output (csv, table). Default table
     -t, --galaxyType      which galaxies to search (None, all, specz or photoz). Default None, i.e. return galaxies and stars
 """
-from __future__ import print_function
 import sys
 import os
 os.environ['TERM'] = 'vt100'
@@ -136,7 +135,7 @@ def main(arguments=None):
             galaxyType=galaxyType
         )
         results = cs.get()
-        print(results)
+        print results
 
     # COVERED = TRUE | FALSE | 999 (I.E. NOT SURE)
     if covered:
@@ -145,7 +144,7 @@ def main(arguments=None):
             ra=ra,
             dec=dec
         ).get()
-        print(check)
+        print check
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()

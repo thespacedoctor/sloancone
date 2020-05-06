@@ -17,8 +17,6 @@ Usage:
     -f, --format          which format to output (csv, table). Default table
     -t, --galaxyType      which galaxies to search (None, all, specz or photoz). Default None, i.e. return galaxies and stars
 """
-from __future__ import print_function
-from __future__ import absolute_import
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -28,8 +26,8 @@ import glob
 import pickle
 from docopt import docopt
 from fundamentals import tools, times
-from .cone_search import cone_search
-from .check_coverage import check_coverage
+from cone_search import cone_search
+from check_coverage import check_coverage
 # from ..__init__ import *
 
 
@@ -58,12 +56,12 @@ def main(arguments=None):
 
     # unpack remaining cl arguments using `exec` to setup the variable names
     # automatically
-    for arg, val in arguments.items():
+    for arg, val in arguments.iteritems():
         if arg[0] == "-":
             varname = arg.replace("-", "") + "Flag"
         else:
             varname = arg.replace("<", "").replace(">", "")
-        if isinstance(val, ("".__class__, u"".__class__)) :
+        if isinstance(val, str) or isinstance(val, unicode):
             exec(varname + " = '%s'" % (val,))
         else:
             exec(varname + " = %s" % (val,))
@@ -119,7 +117,7 @@ def main(arguments=None):
             galaxyType=galaxyType
         )
         results = cs.get()
-        print(results)
+        print results
 
     # covered = True | False | 999 (i.e. not sure)
     if covered:
@@ -128,7 +126,7 @@ def main(arguments=None):
             ra=ra,
             dec=dec
         ).get()
-        print(check)
+        print check
 
     if "dbConn" in locals() and dbConn:
         dbConn.commit()
@@ -197,12 +195,12 @@ def main(arguments=None):
 
     # unpack remaining cl arguments using `exec` to setup the variable names
     # automatically
-    for arg, val in arguments.items():
+    for arg, val in arguments.iteritems():
         if arg[0] == "-":
             varname = arg.replace("-", "") + "Flag"
         else:
             varname = arg.replace("<", "").replace(">", "")
-        if isinstance(val, ("".__class__, u"".__class__)) :
+        if isinstance(val, str) or isinstance(val, unicode):
             exec(varname + " = '%s'" % (val,))
         else:
             exec(varname + " = %s" % (val,))

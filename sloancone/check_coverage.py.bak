@@ -9,7 +9,6 @@
 :Date Created:
     June 29, 2016
 """
-from __future__ import print_function
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -44,7 +43,7 @@ class check_coverage():
                 dec=45.34343
             ).get()  
 
-            print(covered)
+            print covered
 
             # OUTPUT: True
 
@@ -59,7 +58,7 @@ class check_coverage():
                 dec="-25:22:34.3434"
             ).get()
 
-            print(covered)
+            print covered
 
             # OUTPUT: False
     """
@@ -133,7 +132,7 @@ class check_coverage():
                 url=self.url,
                 fmt="html",
                 log=self.log)
-        except Exception as e:
+        except Exception, e:
             self.log.error(
                 "could not determine whether object is in SDSS DR12 footprint - failed with this error %s: " %
                 (str(e),))
@@ -143,20 +142,20 @@ class check_coverage():
 
         if "No objects have been found" in result or "No entries have been found" in result:
             match = False
-            print("This location %(raDeg)s, %(decDeg)s is NOT in the SDSS footprint" % locals())
+            print "This location %(raDeg)s, %(decDeg)s is NOT in the SDSS footprint" % locals()
         elif "cornsilk" in result or "Your query output" in result:
             match = True
-            print("This location %(raDeg)s, %(decDeg)s IS in the SDSS footprint" % locals())
+            print "This location %(raDeg)s, %(decDeg)s IS in the SDSS footprint" % locals()
         elif "minute" in result:
             match = 999
-            print("Not sure if location %(raDeg)s, %(decDeg)s in SDSS, try again shortly" % locals())
-            print(result)
+            print "Not sure if location %(raDeg)s, %(decDeg)s in SDSS, try again shortly" % locals()
+            print result
         else:
             match = 999
-            print("Not sure if location %(raDeg)s, %(decDeg)s in SDSS, here's the resulting HTML:" % locals())
-            print(result)
+            print "Not sure if location %(raDeg)s, %(decDeg)s in SDSS, here's the resulting HTML:" % locals()
+            print result
 
-        print("  See for yourself: http://skyserver.sdss.org/dr12/en/tools/chart/image.aspx?ra=%(raDeg)s&dec=%(decDeg)s&scale=0.8&opt=G&PhotoObjs=off&width=500&height=500" % locals())
+        print "  See for yourself: http://skyserver.sdss.org/dr12/en/tools/chart/image.aspx?ra=%(raDeg)s&dec=%(decDeg)s&scale=0.8&opt=G&PhotoObjs=off&width=500&height=500" % locals()
 
         time.sleep(1)
 

@@ -12,7 +12,6 @@
 .. todo::
     
 """
-from __future__ import print_function
 ################# GLOBAL IMPORTS ####################
 import sys
 import os
@@ -257,7 +256,7 @@ class sdss_square_search():
 
         for row in self.results:
             if "ra" not in row:
-                print(row)
+                print row
                 exit(0)
 
             # CALCULATE SEPARATION IN ARCSEC
