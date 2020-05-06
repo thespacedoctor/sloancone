@@ -28,10 +28,8 @@ from docopt import docopt
 from fundamentals import tools, times
 from subprocess import Popen, PIPE, STDOUT
 
-
 def tab_complete(text, state):
     return (glob.glob(text + '*') + [None])[state]
-
 
 def main(arguments=None):
     """
@@ -157,7 +155,6 @@ def main(arguments=None):
              (endTime, runningTime, ))
 
     return
-
 
 if __name__ == '__main__':
     main()

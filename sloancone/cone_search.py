@@ -5,11 +5,8 @@
 
 :Author:
     David Young
-
-:Date Created:
-    June 29, 2016
 """
-################# GLOBAL IMPORTS ####################
+from builtins import object
 import sys
 import os
 from time import sleep
@@ -17,99 +14,103 @@ os.environ['TERM'] = 'vt100'
 from fundamentals import tools, times
 from fundamentals.renderer import list_of_dictionaries
 
-
-class cone_search():
+class cone_search(object):
     """
     *The worker class for the cone_search module*
 
-    **Key Arguments:**
-        - ``log`` -- logger
-        - ``ra`` -- ra in sexigesimal or decimal degrees
-        - ``dec`` -- dec in sexigesimal or decimal degrees
-        - ``searchRadius`` -- search radius in arcsecs
-        - ``nearest`` -- show closest match only
-        - ``outputFormat`` -- output format (table or csv)
+    **Key Arguments**
 
-    **Usage:**
+    - ``log`` -- logger
+    - ``ra`` -- ra in sexigesimal or decimal degrees
+    - ``dec`` -- dec in sexigesimal or decimal degrees
+    - ``searchRadius`` -- search radius in arcsecs
+    - ``nearest`` -- show closest match only
+    - ``outputFormat`` -- output format (table or csv)
+    
 
-        .. code-block:: python 
+    **Usage**
 
-            from sloancone.cone_search import cone_search
-            csResults = cone_search(
-                log=log,
-                ra="12:45:23.2323",
-                dec="30.343122",
-                searchRadius=60.,
-                nearest=False,
-                outputFormat="table",
-                galaxyType="all"
-            ).get()
+    ```python
+    from sloancone.cone_search import cone_search
+    csResults = cone_search(
+        log=log,
+        ra="12:45:23.2323",
+        dec="30.343122",
+        searchRadius=60.,
+        nearest=False,
+        outputFormat="table",
+        galaxyType="all"
+    ).get()
 
-            print(csResults )
+    print(csResults )
+    ```
+
+    This code outputs the following:
+
+    ```plain
+    +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+    | sdss_name                 | type    | ra        | dec      | specz  | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
+    +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+    | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None   | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
+    | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None   | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
+    | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None   | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
+    | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None   | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
+    | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None   | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
+    | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None   | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
+    | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None   | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
+    | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None   | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
+    +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+    ```
+
+    To return results in a traditional CSV format:
+
+    ```python
+    from sloancone.cone_search import cone_search
+    csResults = cone_search(
+        log=log,
+        ra="112.233432",
+        dec="15:34:31.22",
+        searchRadius=60.,
+        nearest=True,
+        outputFormat="csv",
+        galaxyType="all"
+    ).get()
+
+    print(csResults)
+    ```
+
+    This code outputs the following:
+
+    ```plain
+    sdss_name,type,ra,dec,specz,specz_err,photoz,photoz_err,separation_arcsec,separation_north_arcsec,separation_east_arcsec
+    SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273,-10.2034
+    ```
+
+    To filter the result be a redshift type (``specz`` or ``photoz``)
+
+    ```python
+    from sloancone.cone_search import cone_search
+    csResults = cone_search(
+    
+
+            log=log,
+            ra="12:45:23.2323",
+            dec="30.343122",
+            searchRadius=600.,
+            nearest=False,
+            outputFormat="table",
+            galaxyType="specz"
+        ).get()
+
+        print(csResults )
+        ```
 
         This code outputs the following:
 
-        .. code-block:: plain
+        ```plain
+        +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
+        ```
 
-            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
-            | sdss_name                 | type    | ra        | dec      | specz  | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
-            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
-            | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None   | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
-            | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None   | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
-            | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None   | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
-            | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None   | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
-            | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None   | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
-            | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None   | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
-            | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None   | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
-            | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None   | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
-            +---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
-
-        To return results in a traditional CSV format:
-
-        .. code-block:: python 
-
-            from sloancone.cone_search import cone_search
-            csResults = cone_search(
-                log=log,
-                ra="112.233432",
-                dec="15:34:31.22",
-                searchRadius=60.,
-                nearest=True,
-                outputFormat="csv",
-                galaxyType="all"
-            ).get()
-
-            print(csResults)
-
-        This code outputs the following:
-
-        .. code-block:: plain
-
-            sdss_name,type,ra,dec,specz,specz_err,photoz,photoz_err,separation_arcsec,separation_north_arcsec,separation_east_arcsec
-            SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273,-10.2034
-
-        To filter the result be a redshift type (``specz`` or ``photoz``)
-
-        .. code-block:: python 
-
-            from sloancone.cone_search import cone_search
-            csResults = cone_search(
-                log=log,
-                ra="12:45:23.2323",
-                dec="30.343122",
-                searchRadius=600.,
-                nearest=False,
-                outputFormat="table",
-                galaxyType="specz"
-            ).get()
-
-            print(csResults )
-
-        This code outputs the following:
-
-        .. code-block:: plain
-
-           +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
            | sdss_name                 | type    | ra        | dec      | specz   | specz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
            +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
            | SDSS J124540.06+301923.0  | galaxy  | 191.4169  | 30.3231  | 0.3629  | 0.0002     | 229.5373           | -72.2170                 | 217.8809                |
@@ -135,42 +136,42 @@ class cone_search():
 
         Finally, we can also search for stars and galaxies by selecting ``galaxyType=False``:
 
-        .. code-block:: python 
+        ```python
+        from sloancone.cone_search import cone_search
+        csResults = cone_search(
+            log=log,
+            ra="12:45:23.2323",
+            dec="30.343122",
+            searchRadius=60.,
+            nearest=False,
+            outputFormat="table",
+            galaxyType=False
+        ).get()
 
-            from sloancone.cone_search import cone_search
-            csResults = cone_search(
-                log=log,
-                ra="12:45:23.2323",
-                dec="30.343122",
-                searchRadius=60.,
-                nearest=False,
-                outputFormat="table",
-                galaxyType=False
-            ).get()
+        print(csResults)
+        ```
 
-            print(csResults)
-
-        .. code-block:: plain
-
-            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
-            | sdss_name                 | type    | ra        | dec      | specz    | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
-            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
-            | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None     | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
-            | SDSS J124524.92+302042.7  | star    | 191.3539  | 30.3452  | None     | None       | None    | None        | 23.2234            | 7.5490                   | 21.9622                 |
-            | SDSS J124521.68+302016.9  | star    | 191.3403  | 30.3380  | -0.0001  | 0.0000     | None    | None        | 27.1558            | -18.2960                 | -20.0672                |
-            | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None     | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
-            | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None     | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
-            | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None     | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
-            | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None     | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
-            | SDSS J124521.67+301955.1  | star    | 191.3403  | 30.3320  | None     | None       | None    | None        | 44.8763            | -40.0699                 | -20.2060                |
-            | SDSS J124526.25+302103.7  | star    | 191.3594  | 30.3511  | None     | None       | None    | None        | 48.4191            | 28.5417                  | 39.1124                 |
-            | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None     | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
-            | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None     | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
-            | SDSS J124522.15+301937.9  | star    | 191.3423  | 30.3272  | None     | None       | None    | None        | 58.9703            | -57.2852                 | -13.9962                |
-            | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None     | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
-            | SDSS J124526.04+301947.9  | star    | 191.3585  | 30.3300  | None     | None       | None    | None        | 59.6986            | -47.3115                 | 36.4080                 |
-            | SDSS J124524.95+302130.6  | star    | 191.3540  | 30.3585  | None     | None       | None    | None        | 59.7431            | 55.4049                  | 22.3502                 |
-            +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+        ```plain
+        +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+        | sdss_name                 | type    | ra        | dec      | specz    | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
+        +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+        | SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None     | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
+        | SDSS J124524.92+302042.7  | star    | 191.3539  | 30.3452  | None     | None       | None    | None        | 23.2234            | 7.5490                   | 21.9622                 |
+        | SDSS J124521.68+302016.9  | star    | 191.3403  | 30.3380  | -0.0001  | 0.0000     | None    | None        | 27.1558            | -18.2960                 | -20.0672                |
+        | SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None     | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
+        | SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None     | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
+        | SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None     | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
+        | SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None     | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
+        | SDSS J124521.67+301955.1  | star    | 191.3403  | 30.3320  | None     | None       | None    | None        | 44.8763            | -40.0699                 | -20.2060                |
+        | SDSS J124526.25+302103.7  | star    | 191.3594  | 30.3511  | None     | None       | None    | None        | 48.4191            | 28.5417                  | 39.1124                 |
+        | SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None     | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
+        | SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None     | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
+        | SDSS J124522.15+301937.9  | star    | 191.3423  | 30.3272  | None     | None       | None    | None        | 58.9703            | -57.2852                 | -13.9962                |
+        | SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None     | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
+        | SDSS J124526.04+301947.9  | star    | 191.3585  | 30.3300  | None     | None       | None    | None        | 59.6986            | -47.3115                 | 36.4080                 |
+        | SDSS J124524.95+302130.6  | star    | 191.3540  | 30.3585  | None     | None       | None    | None        | 59.7431            | 55.4049                  | 22.3502                 |
+        +---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+        ```
     """
 
     # Initialisation
@@ -212,9 +213,10 @@ class cone_search():
         """
         *get the cone_search object*
 
-        **Return:**
-            - ``results`` -- the results of the conesearch
+        **Return**
 
+        - ``results`` -- the results of the conesearch
+        
         """
         self.log.debug('starting the ``get`` method')
 
@@ -246,7 +248,7 @@ class cone_search():
         if self.nearest and len(filteredResults):
             orderDict = collections.OrderedDict(sorted({}.items()))
             for h in headers:
-                if h in filteredResults[0].keys():
+                if h in list(filteredResults[0].keys()):
                     orderDict[h] = row[h]
             filteredResults = [orderDict]
             # filteredResults = [filteredResults[0]]

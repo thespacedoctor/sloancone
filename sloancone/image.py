@@ -5,72 +5,76 @@
 
 :Author:
     David Young
-
-:Date Created:
-    July 18, 2016
 """
 from __future__ import print_function
 from __future__ import absolute_import
-################# GLOBAL IMPORTS ####################
+from __future__ import division
+from builtins import object
+from past.utils import old_div
 import sys
 import os
 os.environ['TERM'] = 'vt100'
 from fundamentals import tools
 from astrocalc.coords import unit_conversion
 
-
-class image():
+class image(object):
     """
     *The worker class for the image module*
 
-    **Key Arguments:**
-        - ``log`` -- logger
-        - ``settings`` -- the settings dictionary
-        - ``ra`` -- right-ascension of the sky-location
-        - ``dec`` -- declination of the sky-location
-        - ``downloadDirectory`` -- directory to download the image stamp to. Default *./*
-        - ``filename`` -- path to download the image stamp to. Default *"sdss_stamp.jpeg"*
-        - ``grid`` -- include grid and scale in stamp. Default *True*
-        - ``label`` -- label. Default *False*
-        - ``photocat`` -- mark photometrical catalogued sources. Default *False*
-        - ``speccat`` -- mark spectrscopical catalogued objects. Default *False*
+    **Key Arguments**
+
+    - ``log`` -- logger
+    - ``settings`` -- the settings dictionary
+    - ``ra`` -- right-ascension of the sky-location
+    - ``dec`` -- declination of the sky-location
+    - ``downloadDirectory`` -- directory to download the image stamp to. Default *./*
+    - ``filename`` -- path to download the image stamp to. Default *"sdss_stamp.jpeg"*
+    - ``grid`` -- include grid and scale in stamp. Default *True*
+    - ``label`` -- label. Default *False*
+    - ``photocat`` -- mark photometrical catalogued sources. Default *False*
+    - ``speccat`` -- mark spectrscopical catalogued objects. Default *False*
+    
+
         - ``invertColors`` -- invert the image stamp colors. Default *False*
         - ``arcminWidth`` -- the width of the image stamp in arcmin. Default *5*
         - ``pixelWidth`` -- the width of the image stamp in pixels. Default *500*
 
-    **Return:**
-        - ``covered`` -- the coverage result. True | False | 999 (i.e. not sure)
+    **Return**
 
-    **Usage:**
+    - ``covered`` -- the coverage result. True | False | 999 (i.e. not sure)
+    
 
-        Here's an example where we turn on all options before we download the image:
+    **Usage**
 
-        .. code-block:: python
+    Here's an example where we turn on all options before we download the image:
 
-            from sloancone import image
-            imagestamp = image(
-                log=log,
-                settings=settings,
-                ra="179.689293428354",
-                dec="-0.454379056007667",
-                downloadDirectory="/tmp",
-                filename="sdss_stamp.jpeg",
-                grid=True,
-                label=True,
-                photocat=True,
-                speccat=True,
-                invertColors=True,
-                arcminWidth=5,
-                pixelWidth=500
-            )
-            # covered = True | False | 999 (i.e. not sure)
-            covered = imagestamp.get()
+    ```python
+    from sloancone import image
+    imagestamp = image(
+        log=log,
+        settings=settings,
+        ra="179.689293428354",
+        dec="-0.454379056007667",
+        downloadDirectory="/tmp",
+        filename="sdss_stamp.jpeg",
+        grid=True,
+        label=True,
+        photocat=True,
+        speccat=True,
+        invertColors=True,
+        arcminWidth=5,
+        pixelWidth=500
+    )
+    # covered = True | False | 999 (i.e. not sure)
+    covered = imagestamp.get()
+    ```
 
-        This produces a stamp at ``/tmp/sdss_stamp.jpeg`` that looks like this:
+    This produces a stamp at ``/tmp/sdss_stamp.jpeg`` that looks like this:
 
-        .. image:: https://i.imgur.com/2w4ipqr.png
-            :width: 800px
-            :alt: SDSS image stamp with all options turned on
+    .. image:: https://i.imgur.com/2w4ipqr.png
+        :width: 800px
+        :alt: SDSS image stamp with all options turned on
+    
     """
     # Initialisation
 
@@ -162,7 +166,7 @@ class image():
 
         width = self.pixelWidth
 
-        scale = (self.arcminWidth * 60.) / width
+        scale = old_div((self.arcminWidth * 60.), width)
 
         converter = unit_conversion(
             log=self.log

@@ -11,6 +11,7 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
+from builtins import str
 import sys
 import os
 
@@ -26,7 +27,6 @@ import os
 # Fake modules requring C-Libraries
 from mock import Mock as MagicMock
 
-
 class Mock(MagicMock):
 
     @classmethod
@@ -36,7 +36,6 @@ class Mock(MagicMock):
 MOCK_MODULES = ['numpy', 'scipy', 'matplotlib', 'matplotlib.colors',
                 'matplotlib.pyplot', 'matplotlib.cm', 'matplotlib.path', 'matplotlib.patches', 'matplotlib.projections', 'matplotlib.projections.geo', 'healpy', 'astropy', 'astropy.io', 'pylibmc', 'HMpTy', 'HMpTy.mysql', 'ligo', 'ligo.gracedb', 'ligo.gracedb.rest']
 sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
-
 
 # If your documentation needs a minimal Sphinx version, state it here.
 # needs_sphinx = '1.0'
@@ -119,7 +118,6 @@ pygments_style = 'monokai'
 # A list of ignored prefixes for module index sorting.
 modindex_common_prefix = ["sloancone."]
 
-
 # -- Options for HTML output ---------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
@@ -201,7 +199,6 @@ html_add_permalinks = u"  ∞"
 # Output file base name for HTML help builder.
 html_help_basename = 'sloanconedoc'
 
-
 # -- Options for LaTeX output --------------------------------------------
 
 latex_elements = {
@@ -242,7 +239,6 @@ latex_logo = "_images/thespacedoctor_icon_dark.png"
 # If false, no module index is generated.
 # latex_domain_indices = True
 
-
 # -- Options for manual page output --------------------------------------
 
 # One entry per manual page. List of tuples
@@ -254,7 +250,6 @@ man_pages = [
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
-
 
 # -- Options for Texinfo output ------------------------------------------
 
@@ -276,7 +271,6 @@ texinfo_documents = [
 # How to display URL addresses: 'footnote', 'no', or 'inline'.
 # texinfo_show_urls = 'footnote'
 
-
 # Added to the start of every source file
 # rst_prolog = """
 # """
@@ -285,7 +279,6 @@ texinfo_documents = [
 primary_domain = "py"
 
 trim_footnote_reference_space = True
-
 
 def updateUsageRST():
 
@@ -317,7 +310,6 @@ def updateUsageRST():
     return None
 
 updateUsageRST()
-
 
 def generateAutosummaryIndex():
 
@@ -478,7 +470,6 @@ Functions
 
     return thisText
 
-
 def findAllSubpackges(
     pathToPackage
 ):
@@ -493,7 +484,6 @@ def findAllSubpackges(
             subPackages.append(modname)
 
     return subPackages
-
 
 autosummaryText = generateAutosummaryIndex()
 

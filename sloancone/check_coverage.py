@@ -5,12 +5,10 @@
 
 :Author:
     David Young
-
-:Date Created:
-    June 29, 2016
 """
 from __future__ import print_function
-################# GLOBAL IMPORTS ####################
+from builtins import str
+from builtins import object
 import sys
 import os
 import time
@@ -19,49 +17,51 @@ import requests
 from fundamentals import tools
 from astrocalc.coords import unit_conversion
 
-
-class check_coverage():
+class check_coverage(object):
     """
     *The worker class for the check_coverage module*
 
-    **Key Arguments:**
-        - ``log`` -- python logger
-        - ``raDeg`` -- ra in decimal degrees
-        - ``decDeg`` -- dec in decimal degrees
-        - ``url`` -- the SDSS URL to ping (DR12 is the default)
+    **Key Arguments**
 
-    **Usage:**
+    - ``log`` -- python logger
+    - ``raDeg`` -- ra in decimal degrees
+    - ``decDeg`` -- dec in decimal degrees
+    - ``url`` -- the SDSS URL to ping (DR12 is the default)
+    
 
-        To test whether or not a location in the sky has been covered by the SDSS survey:
+    **Usage**
 
-        .. code-block:: python 
+    To test whether or not a location in the sky has been covered by the SDSS survey:
 
-            from sloancone import check_coverage
-            # covered = True | False | 999 (i.e. not sure)
-            covered = check_coverage(
-                log=log,
-                ra=122.3343,
-                dec=45.34343
-            ).get()  
+    ```python
+    from sloancone import check_coverage
+    # covered = True | False | 999 (i.e. not sure)
+    covered = check_coverage(
+        log=log,
+        ra=122.3343,
+        dec=45.34343
+    ).get()  
 
-            print(covered)
+    print(covered)
 
-            # OUTPUT: True
+    # OUTPUT: True
+    ```
 
-        Coordinates can also be given in sexegesimal format:
+    Coordinates can also be given in sexegesimal format:
 
-        .. code-block:: python 
+    ```python
+    from sloancone import check_coverage
+    covered = check_coverage(
+        log=log,
+        ra="12:45:4.45466",
+        dec="-25:22:34.3434"
+    ).get()
 
-            from sloancone import check_coverage
-            covered = check_coverage(
-                log=log,
-                ra="12:45:4.45466",
-                dec="-25:22:34.3434"
-            ).get()
+    print(covered)
 
-            print(covered)
-
-            # OUTPUT: False
+    # OUTPUT: False
+    ```
+    
     """
     # Initialisation
 
@@ -97,8 +97,10 @@ class check_coverage():
         """
         *get the check_coverage object*
 
-        **Return:**
-            - ``check_coverage``
+        **Return**
+
+        - ``check_coverage``
+        
         """
         self.log.debug('starting the ``get`` method')
 
@@ -141,20 +143,26 @@ class check_coverage():
 
         self.log.debug('result: %s' % (result,))
 
-        if "No objects have been found" in result or "No entries have been found" in result:
+        strResult = str(result)
+
+        if "No objects have been found" in strResult or "No entries have been found" in strResult:
             match = False
-            print("This location %(raDeg)s, %(decDeg)s is NOT in the SDSS footprint" % locals())
-        elif "cornsilk" in result or "Your query output" in result:
+            print(
+                "This location %(raDeg)s, %(decDeg)s is NOT in the SDSS footprint" % locals())
+        elif "cornsilk" in strResult or "Your query output" in strResult:
             match = True
-            print("This location %(raDeg)s, %(decDeg)s IS in the SDSS footprint" % locals())
-        elif "minute" in result:
+            print(
+                "This location %(raDeg)s, %(decDeg)s IS in the SDSS footprint" % locals())
+        elif "minute" in strResult:
             match = 999
-            print("Not sure if location %(raDeg)s, %(decDeg)s in SDSS, try again shortly" % locals())
-            print(result)
+            print(
+                "Not sure if location %(raDeg)s, %(decDeg)s in SDSS, try again shortly" % locals())
+            print(strResult)
         else:
             match = 999
-            print("Not sure if location %(raDeg)s, %(decDeg)s in SDSS, here's the resulting HTML:" % locals())
-            print(result)
+            print(
+                "Not sure if location %(raDeg)s, %(decDeg)s in SDSS, here's the resulting HTML:" % locals())
+            print(strResult)
 
         print("  See for yourself: http://skyserver.sdss.org/dr12/en/tools/chart/image.aspx?ra=%(raDeg)s&dec=%(decDeg)s&scale=0.8&opt=G&PhotoObjs=off&width=500&height=500" % locals())
 

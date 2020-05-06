@@ -5,15 +5,10 @@
 
 :Author:
     David Young
-
-:Date Created:
-    October 24, 2013
 """
-################# GLOBAL IMPORTS ####################
 import sys
 import os
 from docopt import docopt
-
 
 def getpackagepath():
     """
@@ -23,7 +18,6 @@ def getpackagepath():
     packagePath = os.path.dirname(__file__) + "/../"
 
     return packagePath
-
 
 if __name__ == '__main__':
     main()

@@ -38,7 +38,6 @@ shutil.copytree(pathToInputDir, pathToOutputDir)
 if not os.path.exists(pathToOutputDir):
     os.makedirs(pathToOutputDir)
 
-
 class test_check_coverage(unittest.TestCase):
 
     def test_check_coverage_function(self):

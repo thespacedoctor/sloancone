@@ -6,20 +6,22 @@
 :Author:
     David Young
 
-:Date Created:
-    December 2, 2014
-
 .. todo::
     
 """
 from __future__ import print_function
-################# GLOBAL IMPORTS ####################
+from builtins import str
+from future import standard_library
+standard_library.install_aliases()
+from builtins import object
 import sys
 import os
 import re
 import readline
 import glob
-import urllib
+import urllib.request
+import urllib.parse
+import urllib.error
 import string
 import json
 from docopt import docopt
@@ -30,20 +32,19 @@ from astrocalc.coords import unit_conversion, separations, translate
 # CLASSES                                                         #
 ###################################################################
 
-
-class sdss_square_search():
-
+class sdss_square_search(object):
     """
     *The worker class for the sdss_square_search module*
 
-    **Key Arguments:**
-        ``log`` -- logger
-        - ``ra`` -- ra in sexigesimal or decimal degrees
-        - ``dec`` -- dec in sexigesimal or decimal degrees
-        - ``searchRadius`` -- search radius in arcsecs
+    **Key Arguments**
+
+    ``log`` -- logger
+    - ``ra`` -- ra in sexigesimal or decimal degrees
+    - ``dec`` -- dec in sexigesimal or decimal degrees
+    - ``searchRadius`` -- search radius in arcsecs
+    
 
     .. todo::
-
     """
     # Initialisation
 
@@ -92,11 +93,12 @@ class sdss_square_search():
         """
         *get the results from the the sdss square search*
 
-        **Return:**
-            - ``sdss_square_search``
+        **Return**
+
+        - ``sdss_square_search``
+        
 
         .. todo::
-
         """
         self.log.debug('starting the ``get`` method')
 
@@ -112,14 +114,17 @@ class sdss_square_search():
         """
         *calculate search limits for the square search*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
-
         """
         self.log.debug('starting the ``_calculate_search_limits`` method')
 
@@ -149,14 +154,17 @@ class sdss_square_search():
         """
         *build sql query for the sdss square search*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
-
         """
         self.log.debug('starting the ``_build_sql_query`` method')
 
@@ -201,38 +209,47 @@ class sdss_square_search():
         """
         *execute sql query using the sdss API*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
-
         """
         self.log.debug('starting the ``_execute_sql_query`` method')
 
         # generate the api call url
-        params = urllib.urlencode({'cmd': self.sqlQuery, 'format': "json"})
+        params = urllib.parse.urlencode(
+            {'cmd': self.sqlQuery, 'format': "json"})
         # grab the results
-        results = urllib.urlopen(self.sdssUrl + '?%s' % params)
+        results = urllib.request.urlopen(self.sdssUrl + '?%s' % params)
 
         # report any errors
         ofp = sys.stdout
         results = results.read()
-        if results.startswith("ERROR"):  # SQL Statement Error -> stderr
+        if str(results).startswith("ERROR"):  # SQL Statement Error -> stderr
             ofp = sys.stderr
             ofp.write(string.rstrip(line) + os.linesep)
 
         # clean up the json response so it can be parsed
-        results = results.replace(
-            ": ,", ': "NULL",')
-        regex = re.compile(r'"photoz_err"\:\s*(\n\s*})')
-        newString = regex.sub('"photoz_err": "NULL"\g<1>', results)
-        results = newString
-
-        # parse the json results
-        results = json.loads(results)[0]
+        try:
+            # PYTHON 3
+            # parse the json results
+            results = json.loads(results)[0]
+        except:
+            # PYTHON 2
+            results = results.replace(
+                ": ,", ': "NULL",')
+            regex = re.compile(r'"photoz_err"\:\s*(\n\s*})')
+            newString = regex.sub('"photoz_err": "NULL"\g<1>', results)
+            results = newString
+            # parse the json results
+            results = json.loads(results)[0]
         self.results = results["Rows"]
 
         self.log.debug('completed the ``_execute_sql_query`` method')
@@ -243,14 +260,17 @@ class sdss_square_search():
         """
         *append angular separations to results*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
-
         """
         self.log.debug(
             'starting the ``_append_separations_to_results`` method')
@@ -283,14 +303,17 @@ class sdss_square_search():
         """
         *generate sdss object names for the results*
 
-        **Key Arguments:**
-            # -
+        **Key Arguments**
 
-        **Return:**
-            - None
+        # -
+        
+
+        **Return**
+
+        - None
+        
 
         .. todo::
-
         """
         self.log.debug('starting the ``_generate_sdss_object_name`` method')
 
@@ -325,7 +348,6 @@ class sdss_square_search():
 
     # use the tab-trigger below for new method
     # xt-class-method
-
 
 if __name__ == '__main__':
     main()

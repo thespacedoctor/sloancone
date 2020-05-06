@@ -38,7 +38,6 @@ shutil.copytree(pathToInputDir, pathToOutputDir)
 if not os.path.exists(pathToOutputDir):
     os.makedirs(pathToOutputDir)
 
-
 class test_sdss_square_search(unittest.TestCase):
 
     def test_sdss_square_search_function_01(self):
