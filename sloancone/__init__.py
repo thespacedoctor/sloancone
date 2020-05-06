@@ -1,3 +1,4 @@
+from . import cl_utils
 import utKit
 import cl_utils
 from sdss_square_search import sdss_square_search

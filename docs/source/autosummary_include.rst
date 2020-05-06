@@ -1,31 +1,23 @@
 
-Modules
--------
+**Modules**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    sloancone.commonutils 
    sloancone.docstring_test
-   sloancone.utKit 
+   sloancone.utKit
 
-
-Classes
--------
+**Classes**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    sloancone.utKit.utKit 
 
-
-Functions
----------
+**Functions**
 
 .. autosummary::
-   :toctree: _autosummary
    :nosignatures:
 
    sloancone.docstring_test.docsting_test 

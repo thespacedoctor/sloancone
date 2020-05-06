@@ -1,32 +1,42 @@
+from __future__ import print_function
+from builtins import str
 import os
-import nose
+import unittest
 import shutil
 import yaml
-from sloancone import check_coverage, cl_utils
 from sloancone.utKit import utKit
-
 from fundamentals import tools
+from os.path import expanduser
+home = expanduser("~")
+
+packageDirectory = utKit("").get_project_root()
+settingsFile = packageDirectory + "/test_settings.yaml"
 
 su = tools(
-    arguments={"settingsFile": None},
+    arguments={"settingsFile": settingsFile},
     docString=__doc__,
     logLevel="DEBUG",
     options_first=False,
-    projectName="sloancone"
+    projectName=None,
+    defaultSettingsFile=False
 )
 arguments, settings, log, dbConn = su.setup()
 
-# load settings
-stream = file(
-    "/Users/Dave/.config/sloancone/sloancone.yaml", 'r')
-settings = yaml.load(stream)
-stream.close()
-
-# SETUP AND TEARDOWN FIXTURE FUNCTIONS FOR THE ENTIRE MODULE
+# SETUP PATHS TO COMMON DIRECTORIES FOR TEST DATA
 moduleDirectory = os.path.dirname(__file__)
-utKit = utKit(moduleDirectory)
-log, dbConn, pathToInputDir, pathToOutputDir = utKit.setupModule()
-utKit.tearDownModule()
+pathToInputDir = moduleDirectory + "/input/"
+pathToOutputDir = moduleDirectory + "/output/"
+
+try:
+    shutil.rmtree(pathToOutputDir)
+except:
+    pass
+# COPY INPUT TO OUTPUT DIR
+shutil.copytree(pathToInputDir, pathToOutputDir)
+
+# Recursively create missing directories
+if not os.path.exists(pathToOutputDir):
+    os.makedirs(pathToOutputDir)
 
 
 class test_check_coverage(unittest.TestCase):
@@ -40,7 +50,7 @@ class test_check_coverage(unittest.TestCase):
             dec="45.34343"
         ).get()
 
-        print covered
+        print(covered)
 
     def test_check_coverage_function2(self):
 
@@ -51,7 +61,7 @@ class test_check_coverage(unittest.TestCase):
             dec=-45.34343
         ).get()
 
-        print covered
+        print(covered)
 
     def test_check_coverage_function3(self):
 
@@ -62,22 +72,21 @@ class test_check_coverage(unittest.TestCase):
             dec="-25:22:34.3434"
         ).get()
 
-        print covered
+        print(covered)
 
-    # def test_check_coverage_function_exception(self):
-
-    #     from sloancone import check_coverage
-    #     try:
-    #         this = check_coverage(
-    #             log=log,
-    #             settings=settings,
-    #             fakeKey="break the code"
-    #         )
-    #         this.get()
-    #         assert False
-    #     except Exception, e:
-    #         assert True
-    #         print str(e)
+    def test_check_coverage_function_exception(self):
+        from sloancone import check_coverage
+        try:
+            this = check_coverage(
+                log=log,
+                settings=settings,
+                fakeKey="break the code"
+            )
+            this.get()
+            assert False
+        except Exception, e:
+            assert True
+            print(str(e))
 
         # x-print-testpage-for-pessto-marshall-web-object
 
