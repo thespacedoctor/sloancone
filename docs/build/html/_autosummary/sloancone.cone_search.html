@@ -1,0 +1,463 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>cone_search (class) &mdash; sloancone v0.3.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/rtd_sphinx_search.min.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/whistles-theme/Contents/Resources/core.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/whistles-theme/Contents/Resources/style.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/whistles-theme/Contents/Resources/dryx.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/js/rtd_sphinx_search.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/whistles-theme/Contents/Resources/main.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="image (class)" href="sloancone.image.html" />
+    <link rel="prev" title="check_coverage (class)" href="sloancone.check_coverage.html" />
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+          messageStyle: "none",
+          tex2jax: {preview: "none"}
+        });
+    </script>
+  
+  <!-- REMOTE SCRIPTS AND STYLES -->
+
+  <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/bigfoot/2.1.4/bigfoot-number.min.css">
+  <link rel="stylesheet" media="all" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/monokai-sublime.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS_HTML"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.4.4/mermaid.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.11.3/flowchart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bigfoot/2.1.4/bigfoot.min.js"></script>
+
+  
+
+
+
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+
+          
+              
+          
+
+
+<!--           
+            <a href="../index.html" class="icon icon-home"> sloancone
+          
+
+          
+            
+            <img src="../_static/thespacedoctor_icon_white_circle.png" class="logo" alt="Logo"/>
+          
+          </a> -->
+
+
+
+          
+            <a href="../index.html" class="icon icon-home"> sloancone</a> <p>SDSS conesearching tools via the CL or Python API. Return conesearch results, or simply check whether or not a location in the sky has been covered by SDSS.</p> <a href="../index.html"><img src="../_static/thespacedoctor_icon_white_circle.png" class="logo" alt="Logo"/> </a>
+          
+
+
+          
+          
+            
+            
+              <div class="version">
+                v0.3.3
+              </div>
+            
+          
+
+          
+              <a class="github-button" href="https://github.com/thespacedoctor/sloancone" data-size="large" data-show-count="true" aria-label="Star thespacedoctor/sloancone on GitHub">Star</a>
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Table of Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../initialisation.html">Initialisation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../todolist.html">Todo List</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changes_link.html">Release Notes</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../autosummary.html">Modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../autosummary.html#classes">Classes</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sloancone.check_coverage.html">check_coverage <em>(class)</em></a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">cone_search <em>(class)</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sloancone.image.html">image <em>(class)</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sloancone.sdss_square_search.html">sdss_square_search <em>(class)</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="sloancone.utKit.utKit.html">utKit <em>(class)</em></a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../genindex.html">A-Z Index</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">sloancone</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../autosummary.html">Modules</a> &raquo;</li>
+        
+      <li>cone_search <em>(class)</em></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/_autosummary/sloancone.cone_search.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cone-search-class">
+<h1>cone_search <em>(class)</em><a class="headerlink" href="#cone-search-class" title="Permalink to this headline">  ∞</a></h1>
+<dl class="py class">
+<dt id="sloancone.cone_search">
+<em class="property">class </em><code class="sig-name descname">cone_search</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">log</span></em>, <em class="sig-param"><span class="n">ra</span></em>, <em class="sig-param"><span class="n">dec</span></em>, <em class="sig-param"><span class="n">searchRadius</span></em>, <em class="sig-param"><span class="n">nearest</span></em>, <em class="sig-param"><span class="n">outputFormat</span><span class="o">=</span><span class="default_value">'table'</span></em>, <em class="sig-param"><span class="n">galaxyType</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference external" href="https://github.com/thespacedoctor/sloancone/tree/master/sloancone/cone_search.py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sloancone.cone_search" title="Permalink to this definition">  ∞</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p><em>The worker class for the cone_search module</em></p>
+<p><strong>Key Arguments</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">log</span></code> – logger</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ra</span></code> – ra in sexigesimal or decimal degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dec</span></code> – dec in sexigesimal or decimal degrees</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">searchRadius</span></code> – search radius in arcsecs</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nearest</span></code> – show closest match only</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">outputFormat</span></code> – output format (table or csv)</p></li>
+</ul>
+<p><strong>Usage</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone.cone_search</span> <span class="kn">import</span> <span class="n">cone_search</span>
+<span class="n">csResults</span> <span class="o">=</span> <span class="n">cone_search</span><span class="p">(</span>
+    <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+    <span class="n">ra</span><span class="o">=</span><span class="s2">&quot;12:45:23.2323&quot;</span><span class="p">,</span>
+    <span class="n">dec</span><span class="o">=</span><span class="s2">&quot;30.343122&quot;</span><span class="p">,</span>
+    <span class="n">searchRadius</span><span class="o">=</span><span class="mf">60.</span><span class="p">,</span>
+    <span class="n">nearest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="n">outputFormat</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+    <span class="n">galaxyType</span><span class="o">=</span><span class="s2">&quot;all&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">csResults</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>This code outputs the following:</p>
+<div class="highlight-plain notranslate"><div class="highlight"><pre><span></span>+---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+| sdss_name                 | type    | ra        | dec      | specz  | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
++---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+| SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None   | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
+| SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None   | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
+| SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None   | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
+| SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None   | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
+| SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None   | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
+| SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None   | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
+| SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None   | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
+| SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None   | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
++---------------------------+---------+-----------+----------+--------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+</pre></div>
+</div>
+<p>To return results in a traditional CSV format:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone.cone_search</span> <span class="kn">import</span> <span class="n">cone_search</span>
+<span class="n">csResults</span> <span class="o">=</span> <span class="n">cone_search</span><span class="p">(</span>
+    <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+    <span class="n">ra</span><span class="o">=</span><span class="s2">&quot;112.233432&quot;</span><span class="p">,</span>
+    <span class="n">dec</span><span class="o">=</span><span class="s2">&quot;15:34:31.22&quot;</span><span class="p">,</span>
+    <span class="n">searchRadius</span><span class="o">=</span><span class="mf">60.</span><span class="p">,</span>
+    <span class="n">nearest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">outputFormat</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">,</span>
+    <span class="n">galaxyType</span><span class="o">=</span><span class="s2">&quot;all&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">csResults</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This code outputs the following:</p>
+<div class="highlight-plain notranslate"><div class="highlight"><pre><span></span>sdss_name,type,ra,dec,specz,specz_err,photoz,photoz_err,separation_arcsec,separation_north_arcsec,separation_east_arcsec
+SDSS J072855.31+153454.6,galaxy,112.2305,15.5818,,,0.7211,0.0719,25.5528,23.4273,-10.2034
+</pre></div>
+</div>
+<p>To filter the result be a redshift type (<code class="docutils literal notranslate"><span class="pre">specz</span></code> or <code class="docutils literal notranslate"><span class="pre">photoz</span></code>)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sloancone.cone_search</span> <span class="kn">import</span> <span class="n">cone_search</span>
+<span class="n">csResults</span> <span class="o">=</span> <span class="n">cone_search</span><span class="p">(</span>
+
+
+        <span class="n">log</span><span class="o">=</span><span class="n">log</span><span class="p">,</span>
+        <span class="n">ra</span><span class="o">=</span><span class="s2">&quot;12:45:23.2323&quot;</span><span class="p">,</span>
+        <span class="n">dec</span><span class="o">=</span><span class="s2">&quot;30.343122&quot;</span><span class="p">,</span>
+        <span class="n">searchRadius</span><span class="o">=</span><span class="mf">600.</span><span class="p">,</span>
+        <span class="n">nearest</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">outputFormat</span><span class="o">=</span><span class="s2">&quot;table&quot;</span><span class="p">,</span>
+        <span class="n">galaxyType</span><span class="o">=</span><span class="s2">&quot;specz&quot;</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">csResults</span> <span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>This code outputs the following:
+
+```plain
++---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
+```
+
+   | sdss_name                 | type    | ra        | dec      | specz   | specz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
+   +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
+   | SDSS J124540.06+301923.0  | galaxy  | 191.4169  | 30.3231  | 0.3629  | 0.0002     | 229.5373           | -72.2170                 | 217.8809                |
+   | SDSS J124534.33+301624.6  | galaxy  | 191.3931  | 30.2735  | 0.2609  | 0.0000     | 288.8809           | -250.5509                | 143.7929                |
+   | SDSS J124512.46+301502.3  | galaxy  | 191.3019  | 30.2506  | 0.5810  | 0.0002     | 360.9520           | -332.9018                | -139.5091               |
+   | SDSS J124512.46+301502.3  | galaxy  | 191.3019  | 30.2506  | 0.5809  | 0.0002     | 360.9520           | -332.9018                | -139.5091               |
+   | SDSS J124544.87+302435.6  | galaxy  | 191.4370  | 30.4099  | 0.2254  | 0.0000     | 369.1276           | 240.3704                 | 280.1380                |
+   | SDSS J124547.42+302532.8  | galaxy  | 191.4476  | 30.4258  | 0.4473  | 0.0001     | 431.9371           | 297.5669                 | 313.0872                |
+   | SDSS J124454.28+301700.6  | galaxy  | 191.2262  | 30.2835  | 0.2599  | 0.0000     | 431.9447           | -214.5446                | -374.8959               |
+   | SDSS J124558.38+301904.7  | galaxy  | 191.4933  | 30.3180  | 0.1767  | 0.0000     | 463.9608           | -90.4407                 | 455.0606                |
+   | SDSS J124544.31+301417.7  | galaxy  | 191.4347  | 30.2383  | 0.3632  | 0.0000     | 465.9112           | -377.4610                | 273.1236                |
+   | SDSS J124543.24+301319.2  | galaxy  | 191.4302  | 30.2220  | 0.0669  | 0.0000     | 507.2387           | -436.0132                | 259.1979                |
+   | SDSS J124557.99+302437.8  | galaxy  | 191.4916  | 30.4105  | 0.4469  | 0.0002     | 511.0694           | 242.6379                 | 449.7987                |
+   | SDSS J124602.33+302241.3  | galaxy  | 191.5097  | 30.3782  | 0.4365  | 0.0001     | 521.5570           | 126.1410                 | 506.0733                |
+   | SDSS J124602.33+302241.3  | galaxy  | 191.5097  | 30.3782  | 0.4365  | 0.0001     | 521.5570           | 126.1410                 | 506.0733                |
+   | SDSS J124605.96+301913.6  | galaxy  | 191.5248  | 30.3205  | 0.1761  | 0.0000     | 559.2108           | -81.5693                 | 553.2298                |
+   | SDSS J124439.37+301949.6  | galaxy  | 191.1640  | 30.3305  | 0.2219  | 0.0000     | 569.6536           | -45.5571                 | -567.8291               |
+   | SDSS J124439.37+301949.6  | galaxy  | 191.1640  | 30.3305  | 0.2220  | 0.0000     | 569.6536           | -45.5571                 | -567.8291               |
+   | SDSS J124538.93+302945.0  | galaxy  | 191.4122  | 30.4958  | 0.2252  | 0.0000     | 586.1380           | 549.8198                 | 203.1158                |
+   | SDSS J124450.57+301333.8  | galaxy  | 191.2107  | 30.2261  | 0.4373  | 0.0001     | 597.1297           | -421.4088                | -423.0586               |
+   | SDSS J124450.57+301333.8  | galaxy  | 191.2107  | 30.2261  | 0.4377  | 0.0001     | 597.1297           | -421.4088                | -423.0586               |
+   +---------------------------+---------+-----------+----------+---------+------------+--------------------+--------------------------+-------------------------+
+
+Finally, we can also search for stars and galaxies by selecting ``galaxyType=False``:
+
+```python
+from sloancone.cone_search import cone_search
+csResults = cone_search(
+    log=log,
+    ra=&quot;12:45:23.2323&quot;,
+    dec=&quot;30.343122&quot;,
+    searchRadius=60.,
+    nearest=False,
+    outputFormat=&quot;table&quot;,
+    galaxyType=False
+).get()
+
+print(csResults)
+```
+
+```plain
++---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+| sdss_name                 | type    | ra        | dec      | specz    | specz_err  | photoz  | photoz_err  | separation_arcsec  | separation_north_arcsec  | separation_east_arcsec  |
++---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+| SDSS J124521.85+302046.0  | galaxy  | 191.3410  | 30.3461  | None     | None       | 0.3443  | 0.1007      | 20.8856            | 10.8005                  | -17.8762                |
+| SDSS J124524.92+302042.7  | star    | 191.3539  | 30.3452  | None     | None       | None    | None        | 23.2234            | 7.5490                   | 21.9622                 |
+| SDSS J124521.68+302016.9  | star    | 191.3403  | 30.3380  | -0.0001  | 0.0000     | None    | None        | 27.1558            | -18.2960                 | -20.0672                |
+| SDSS J124522.39+302100.4  | galaxy  | 191.3433  | 30.3501  | None     | None       | 0.3172  | 0.0901      | 27.4400            | 25.2212                  | -10.8094                |
+| SDSS J124522.08+302007.4  | galaxy  | 191.3420  | 30.3354  | None     | None       | 0.3672  | 0.1133      | 31.4720            | -27.7701                 | -14.8090                |
+| SDSS J124524.95+302105.7  | galaxy  | 191.3540  | 30.3516  | None     | None       | 0.2721  | 0.0311      | 37.8154            | 30.5314                  | 22.3124                 |
+| SDSS J124524.57+302000.2  | galaxy  | 191.3524  | 30.3334  | None     | None       | 0.4181  | 0.0965      | 39.1194            | -35.0377                 | 17.3979                 |
+| SDSS J124521.67+301955.1  | star    | 191.3403  | 30.3320  | None     | None       | None    | None        | 44.8763            | -40.0699                 | -20.2060                |
+| SDSS J124526.25+302103.7  | star    | 191.3594  | 30.3511  | None     | None       | None    | None        | 48.4191            | 28.5417                  | 39.1124                 |
+| SDSS J124519.23+302042.5  | galaxy  | 191.3302  | 30.3452  | None     | None       | 0.2347  | 0.0749      | 52.2402            | 7.3538                   | -51.7200                |
+| SDSS J124521.36+301943.9  | galaxy  | 191.3390  | 30.3289  | None     | None       | 0.1978  | 0.0699      | 56.7372            | -51.3133                 | -24.2086                |
+| SDSS J124522.15+301937.9  | star    | 191.3423  | 30.3272  | None     | None       | None    | None        | 58.9703            | -57.2852                 | -13.9962                |
+| SDSS J124519.89+302115.9  | galaxy  | 191.3329  | 30.3544  | None     | None       | 0.9105  | 0.0821      | 59.3096            | 40.6688                  | -43.1703                |
+| SDSS J124526.04+301947.9  | star    | 191.3585  | 30.3300  | None     | None       | None    | None        | 59.6986            | -47.3115                 | 36.4080                 |
+| SDSS J124524.95+302130.6  | star    | 191.3540  | 30.3585  | None     | None       | None    | None        | 59.7431            | 55.4049                  | 22.3502                 |
++---------------------------+---------+-----------+----------+----------+------------+---------+-------------+--------------------+--------------------------+-------------------------+
+```
+</pre></div>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../_api/sloancone.cone_search.html#sloancone.cone_search.cone_search.get" title="sloancone.cone_search.cone_search.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>()</p></td>
+<td><p><em>get the cone_search object</em></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt id="sloancone.cone_search.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference external" href="https://github.com/thespacedoctor/sloancone/tree/master/sloancone/cone_search.get.py"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#sloancone.cone_search.get" title="Permalink to this definition">  ∞</a></dt>
+<dd><p><em>get the cone_search object</em></p>
+<p><strong>Return</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">results</span></code> – the results of the conesearch</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="sloancone.image.html" class="btn btn-neutral float-right" title="image (class)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="sloancone.check_coverage.html" class="btn btn-neutral float-left" title="check_coverage (class)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Dave Young
+
+    </p>
+  </div>
+    
+    
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
