@@ -9,8 +9,8 @@
 
 <!-- STATUS BADGES -->  
 
-[![](http://167.71.135.11:8080/buildStatus/icon?job=sloancone%2Fmaster&subject=build%20master)](http://167.71.135.11:8080/blue/organizations/jenkins/sloancone/activity?branch=master)  
-[![](http://167.71.135.11:8080/buildStatus/icon?job=sloancone%2Fdevelop&subject=build%20dev)](http://167.71.135.11:8080/blue/organizations/jenkins/sloancone/activity?branch=develop)  
+[![](http://157.245.42.153:8080/buildStatus/icon?job=sloancone%2Fmaster&subject=build%20master)](http://157.245.42.153:8080/blue/organizations/jenkins/sloancone/activity?branch=master)  
+[![](http://157.245.42.153:8080/buildStatus/icon?job=sloancone%2Fdevelop&subject=build%20dev)](http://157.245.42.153:8080/blue/organizations/jenkins/sloancone/activity?branch=develop)  
 [![](https://cdn.jsdelivr.net/gh/thespacedoctor/sloancone@master/coverage.svg)](https://raw.githack.com/thespacedoctor/sloancone/master/htmlcov/index.html)  
 [![](https://readthedocs.org/projects/sloancone/badge/?version=master)](https://sloancone.readthedocs.io/en/master/)  
 [![](https://img.shields.io/github/issues/thespacedoctor/sloancone/type:%20bug?label=bug%20issues)](https://github.com/thespacedoctor/sloancone/issues?q=is%3Aissue+is%3Aopen+label%3A%22type%3A+bug%22+)  
