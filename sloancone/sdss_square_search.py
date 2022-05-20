@@ -10,27 +10,28 @@
     
 """
 from __future__ import print_function
+from astrocalc.coords import unit_conversion, separations, translate
+from fundamentals import tools, times
+from docopt import docopt
+import json
+import string
+import urllib.error
+import urllib.parse
+import urllib.request
+import glob
+import readline
+import re
+import os
+import sys
+from builtins import object
 from builtins import str
 from future import standard_library
 standard_library.install_aliases()
-from builtins import object
-import sys
-import os
-import re
-import readline
-import glob
-import urllib.request
-import urllib.parse
-import urllib.error
-import string
-import json
-from docopt import docopt
-from fundamentals import tools, times
-from astrocalc.coords import unit_conversion, separations, translate
 
 ###################################################################
 # CLASSES                                                         #
 ###################################################################
+
 
 class sdss_square_search(object):
     """
@@ -42,7 +43,7 @@ class sdss_square_search(object):
     - ``ra`` -- ra in sexigesimal or decimal degrees
     - ``dec`` -- dec in sexigesimal or decimal degrees
     - ``searchRadius`` -- search radius in arcsecs
-    
+
 
     .. todo::
     """
@@ -65,7 +66,7 @@ class sdss_square_search(object):
         # xt-self-arg-tmpx
 
         # Variable Data Atrributes
-        self.sdssUrl = 'http://skyserver.sdss3.org/public/en/tools/search/x_sql.aspx'
+        self.sdssUrl = 'http://skyserver.sdss.org/dr16/en/tools/search/x_sql.aspx'
 
         # Initial Actions
         # convert ra and dec to decimal degrees (if required)
@@ -96,7 +97,7 @@ class sdss_square_search(object):
         **Return**
 
         - ``sdss_square_search``
-        
+
 
         .. todo::
         """
@@ -117,12 +118,12 @@ class sdss_square_search(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
         """
@@ -157,12 +158,12 @@ class sdss_square_search(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
         """
@@ -212,12 +213,12 @@ class sdss_square_search(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
         """
@@ -263,12 +264,12 @@ class sdss_square_search(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
         """
@@ -306,12 +307,12 @@ class sdss_square_search(object):
         **Key Arguments**
 
         # -
-        
+
 
         **Return**
 
         - None
-        
+
 
         .. todo::
         """
@@ -348,6 +349,7 @@ class sdss_square_search(object):
 
     # use the tab-trigger below for new method
     # xt-class-method
+
 
 if __name__ == '__main__':
     main()
