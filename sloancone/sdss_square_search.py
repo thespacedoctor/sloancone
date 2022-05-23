@@ -16,8 +16,14 @@ from docopt import docopt
 import json
 import string
 import urllib.error
-import urllib.parse
-import urllib.request
+try:
+    import urllib.parse as urlparse
+except:
+    from urlparse import urlparse
+try:  # python3
+    from urllib.request import urlopen
+except:  # python2
+    from urllib2 import urlopen
 import glob
 import readline
 import re
@@ -225,10 +231,10 @@ class sdss_square_search(object):
         self.log.debug('starting the ``_execute_sql_query`` method')
 
         # generate the api call url
-        params = urllib.parse.urlencode(
+        params = urlparse.urlencode(
             {'cmd': self.sqlQuery, 'format': "json"})
         # grab the results
-        results = urllib.request.urlopen(self.sdssUrl + '?%s' % params)
+        results = urlopen(self.sdssUrl + '?%s' % params)
 
         # report any errors
         ofp = sys.stdout
