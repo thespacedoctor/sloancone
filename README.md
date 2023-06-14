@@ -1,5 +1,9 @@
 # sloancone
 
+
+
+[![](https://zenodo.org/badge/62136666.svg)](https://zenodo.org/badge/latestdoi/62136666) 
+
 <!-- INFO BADGES -->  
 
 [![](https://img.shields.io/pypi/pyversions/sloancone)](https://pypi.org/project/sloancone/)  
@@ -24,5 +28,20 @@ Documentation for sloancone is hosted by [Read the Docs](https://sloancone.readt
 
 * 
 
+
+## How to cite sloancone
+
+If you use `sloancone` in your work, please cite using the following BibTeX entry: 
+
+```bibtex
+@software{Young_sloancone,
+    author = {Young, David R.},
+    doi = {10.5281/zenodo.8038193},
+    license = {GPL-3.0-only},
+    title = {{sloancone}},
+    url = {https://github.com/thespacedoctor/sloancone}
+}
+```
+ 
 
 
