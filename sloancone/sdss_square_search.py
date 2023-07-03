@@ -72,7 +72,7 @@ class sdss_square_search(object):
         # xt-self-arg-tmpx
 
         # Variable Data Atrributes
-        self.sdssUrl = 'http://skyserver.sdss.org/dr16/en/tools/search/x_sql.aspx'
+        self.sdssUrl = 'https://skyserver.sdss.org/dr16/en/tools/search/x_sql.aspx'
 
         # Initial Actions
         # convert ra and dec to decimal degrees (if required)
