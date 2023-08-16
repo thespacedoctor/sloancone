@@ -9,13 +9,13 @@
 from __future__ import print_function
 from __future__ import absolute_import
 from __future__ import division
+from fundamentals import tools
 from builtins import object
 from past.utils import old_div
 import sys
 import os
 os.environ['TERM'] = 'vt100'
-from fundamentals import tools
-from astrocalc.coords import unit_conversion
+
 
 class image(object):
     """
@@ -33,7 +33,7 @@ class image(object):
     - ``label`` -- label. Default *False*
     - ``photocat`` -- mark photometrical catalogued sources. Default *False*
     - ``speccat`` -- mark spectrscopical catalogued objects. Default *False*
-    
+
 
         - ``invertColors`` -- invert the image stamp colors. Default *False*
         - ``arcminWidth`` -- the width of the image stamp in arcmin. Default *5*
@@ -42,7 +42,7 @@ class image(object):
     **Return**
 
     - ``covered`` -- the coverage result. True | False | 999 (i.e. not sure)
-    
+
 
     **Usage**
 
@@ -74,7 +74,7 @@ class image(object):
     .. image:: https://i.imgur.com/2w4ipqr.png
         :width: 800px
         :alt: SDSS image stamp with all options turned on
-    
+
     """
     # Initialisation
 
@@ -144,6 +144,8 @@ class image(object):
         """*download sdss image*
         """
         self.log.debug('starting the ``_download_sdss_image`` method')
+
+        from astrocalc.coords import unit_conversion
 
         opt = ""
         if self.grid:
