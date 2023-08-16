@@ -41,7 +41,7 @@ setup(name="sloancone",
       classifiers=[
           'Development Status :: 4 - Beta',
           'License :: OSI Approved :: MIT License',
-          'Programming Language :: Python :: 3.7',
+          'Programming Language :: Python :: 3.9',
           'Topic :: Utilities',
       ],
       keywords=['astronomy, conesearch, sdss'],
