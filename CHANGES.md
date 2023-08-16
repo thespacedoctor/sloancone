@@ -1,6 +1,10 @@
 
 ## Release Notes
 
+**v0.4.3 - August 16, 2023**
+
+* **FIXED**: Docs now building again on readthedocs
+
 **v0.4.2 - July 3, 2023**
 
 * **FIXED**: Sloan URL endpoints changed again. Now updated.
