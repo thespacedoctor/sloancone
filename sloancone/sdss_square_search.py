@@ -10,7 +10,6 @@
     
 """
 from __future__ import print_function
-from astrocalc.coords import unit_conversion, separations, translate
 from fundamentals import tools, times
 from docopt import docopt
 import json
@@ -70,6 +69,8 @@ class sdss_square_search(object):
         self.searchRadius = searchRadius
         self.galaxyType = galaxyType
         # xt-self-arg-tmpx
+
+        from astrocalc.coords import unit_conversion
 
         # Variable Data Atrributes
         self.sdssUrl = 'https://skyserver.sdss.org/dr16/en/tools/search/x_sql.aspx'
@@ -134,6 +135,8 @@ class sdss_square_search(object):
         .. todo::
         """
         self.log.debug('starting the ``_calculate_search_limits`` method')
+
+        from astrocalc.coords import translate
 
         # TRANSLATE COORDINATES ACROSS SKY
 
@@ -282,6 +285,8 @@ class sdss_square_search(object):
         self.log.debug(
             'starting the ``_append_separations_to_results`` method')
 
+        from astrocalc.coords import separations
+
         for row in self.results:
             if "ra" not in row:
                 print(row)
@@ -323,6 +328,8 @@ class sdss_square_search(object):
         .. todo::
         """
         self.log.debug('starting the ``_generate_sdss_object_name`` method')
+
+        from astrocalc.coords import unit_conversion
 
         converter = unit_conversion(
             log=self.log

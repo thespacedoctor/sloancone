@@ -7,15 +7,15 @@
     David Young
 """
 from __future__ import print_function
+from fundamentals import tools
+import requests
 from builtins import str
 from builtins import object
 import sys
 import os
 import time
 os.environ['TERM'] = 'vt100'
-import requests
-from fundamentals import tools
-from astrocalc.coords import unit_conversion
+
 
 class check_coverage(object):
     """
@@ -27,7 +27,7 @@ class check_coverage(object):
     - ``raDeg`` -- ra in decimal degrees
     - ``decDeg`` -- dec in decimal degrees
     - ``url`` -- the SDSS URL to ping (DR12 is the default)
-    
+
 
     **Usage**
 
@@ -61,7 +61,7 @@ class check_coverage(object):
 
     # OUTPUT: False
     ```
-    
+
     """
     # Initialisation
 
@@ -80,7 +80,7 @@ class check_coverage(object):
         # xt-self-arg-tmpx
 
         # Initial Actions
-
+        from astrocalc.coords import unit_conversion
         converter = unit_conversion(
             log=self.log
         )
@@ -100,7 +100,7 @@ class check_coverage(object):
         **Return**
 
         - ``check_coverage``
-        
+
         """
         self.log.debug('starting the ``get`` method')
 
