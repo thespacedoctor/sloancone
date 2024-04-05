@@ -1,8 +1,7 @@
 # sloancone
 
 
-
-[![](https://zenodo.org/badge/62136666.svg)](https://zenodo.org/badge/latestdoi/62136666) 
+[![](https://zenodo.org/badge/DOI/10.5281/zenodo.8038192.svg)](https://zenodo.org/doi/10.5281/zenodo.8038192) 
 
 <!-- INFO BADGES -->  
 
@@ -36,10 +35,10 @@ If you use `sloancone` in your work, please cite using the following BibTeX entr
 ```bibtex
 @software{Young_sloancone,
     author = {Young, David R.},
-    doi = {10.5281/zenodo.8038193},
+    doi = {10.5281/zenodo.8038192},
     license = {GPL-3.0-only},
-    title = {{sloancone}},
-    url = {https://github.com/thespacedoctor/sloancone}
+    title = {{sloancone. Conesearch SDSS via the command line}},
+    url = {https://zenodo.org/doi/10.5281/zenodo.8038192}
 }
 ```
  
